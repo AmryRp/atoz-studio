@@ -1,0 +1,199 @@
+.App {
+  text-align: center !important;
+}
+
+.App-logo {
+  height: 40vmin !important;
+  pointer-events: none !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear !important;
+  }
+}
+
+.App-header {
+  background-color: #282c34 !important;
+  min-height: 5vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: calc(10px + 2vmin) !important;
+  color: #c9ebff !important;
+}
+
+.App-link {
+  color: #8dfcf2 !important;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg) !important;
+  }
+
+  to {
+    transform: rotate(360deg) !important;
+  }
+}
+
+body {
+  justify-content: center !important;
+  align-items: center !important;
+  background: #fcfdff !important;
+}
+
+/*NAVIGATOR ANIMATION*/
+.navigation {
+  position: relative !important;
+  width: 100% !important;
+  height: 60px !important;
+  background: #c9ebff !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  /* border-radius: 10px !important; */
+}
+
+.navigation ul {
+  display: flex !important;
+  width: 100% !important;
+}
+
+.navigation ul li {
+  list-style: none !important;
+  position: relative !important;
+  width: 70px !important;
+  height: 60px !important;
+  z-index: 2 !important;
+}
+
+.navigation ul li a {
+  position: relative !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  text-align: center !important;
+  font-weight: 500 !important;
+}
+
+.navigation ul li a .icon {
+  position: relative !important;
+  display: block !important;
+  line-height: 80px !important;
+  font-size: 20px !important;
+  transition: 0.5s !important;
+  color: #222327 !important;
+
+}
+
+.navigation ul li.active a .icon {
+  transform: translateY(45px) !important;
+  color: #2196f3 !important;
+  font-size: 35px !important;
+}
+
+.navigation ul li a .text {
+  position: absolute !important;
+  color: #144f70 !important;
+  padding: 2px 7px !important;
+  border-radius: 12px !important;
+  font-weight: 400 !important;
+  font-size: 0.75em !important;
+  letter-spacing: 0.05em !important;
+  transition: 0.5s !important;
+  opacity: 0 !important;
+  transform: translateY(-10px) !important;
+}
+
+.navigation ul li.active a .text {
+  transform: translateY(-4px) !important;
+  opacity: 1 !important;
+}
+
+/* Indicator */
+.indicator {
+  position: absolute !important;
+  top: 35px !important;
+  width: 70px !important;
+  height: 70px !important;
+  background: #c9ebff !important;
+  border-radius: 50% !important;
+  z-index: 1 !important;
+  transition: 0.5s !important;
+}
+
+.indicator::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 25px !important;
+  left: -30px !important;
+  width: 30px !important;
+  height: 30px !important;
+  background: transparent !important;
+  border-radius: 50% !important;
+  box-shadow: 15px -18px #c9ebff !important;
+}
+
+.indicator::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 25px !important;
+  right: -30px !important;
+  width: 30px !important;
+  height: 30px !important;
+  background: transparent !important;
+  border-radius: 50% !important;
+  box-shadow: -15px -18px #c9ebff !important;
+}
+
+.navigation ul li:nth-child(1).active~.indicator {
+  transform: translateX(calc(70px *0)) !important;
+}
+
+.navigation ul li:nth-child(2).active~.indicator {
+  transform: translateX(calc(70px *1)) !important;
+}
+
+.navigation ul li:nth-child(3).active~.indicator {
+  transform: translateX(calc(70px *2)) !important;
+}
+
+.navigation ul li:nth-child(4).active~.indicator {
+  transform: translateX(calc(70px *3)) !important;
+}
+
+.Dashboard {
+  background: transparent !important;
+  display: flex !important;
+  position: relative !important;
+  justify-content: center !important;
+}
+
+.Title {
+  padding: 50px !important;
+
+  text-align: center;
+  color: #007bb4 !important;
+}
+
+.upperLogo {
+  margin: 10px;
+  height: 64px !important;
+  width: 64px !important;
+}
+
+.searchBox {
+  position: relative !important;
+}
+
+.BannerImg{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  /* filter: hue-rotate(190deg); */
+}
