@@ -46,8 +46,9 @@ const Dashboard = () => {
           </div>
 
           <div>
-            {/* Tittle Banner */}
+            {/* Tittle Banner 
             <img className="BannerImg" src={mask} alt="hanya mask" />
+            */}
           </div>
           <div>
             {/* 3D showcase */}

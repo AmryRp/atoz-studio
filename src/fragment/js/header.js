@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaHome, FaUserAlt, FaRegChartBar, FaShoppingCart } from "react-icons/fa";
+import { FaHome, FaPhone, FaSlideshare, FaPhotoVideo } from "react-icons/fa";
 import "../../theme/defaultstyle.css";
 import { ReactComponent as ReactLogo } from "../../resource/32.svg";
 import { Input } from 'antd';
@@ -32,21 +32,21 @@ const Header = () => {
       },
       {
         id: "2",
-        idn: "profil akun",
-        iconName: "FaUserAlt",
-        en: "Profile",
+        idn: "Tentang Kami",
+        en: "About Us",
+        iconName: "FaSlideshare",
       },
       {
         id: "3",
-        idn: "Statistik",
-        iconName: "FaRegChartBar",
-        en: "Stats",
+        idn: "Portofolio",
+        en: "Portofolio",
+        iconName: "FaPhotoVideo",
       },
       {
         id: "4",
-        idn: "Keranjang",
-        iconName: "FaShoppingCart",
-        en: "Cart",
+        idn: "profil akun",
+        en: "Profile",
+        iconName: "FaPhone",
       },
     ]
   )
@@ -63,14 +63,14 @@ const Header = () => {
   }
 
   const iconLoad = (props) => {
-    if (props === "FaUserAlt") {
-      return <FaUserAlt />
+    if (props === "FaPhone") {
+      return <FaPhone />
     }
-    if (props === "FaRegChartBar") {
-      return <FaRegChartBar />
+    if (props === "FaSlideshare") {
+      return <FaSlideshare />
     }
-    if (props === "FaShoppingCart") {
-      return <FaShoppingCart />
+    if (props === "FaPhotoVideo") {
+      return <FaPhotoVideo />
     }
     return <FaHome />;
   }
