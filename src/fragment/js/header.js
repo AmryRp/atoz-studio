@@ -94,9 +94,9 @@ const Header = () => {
             })}
             <div className="indicator"></div>
           </ul>
-          <div>
+          {/* <div>
             <Search className="searchBox" placeholder="search... "/>
-          </div>
+          </div> */}
         </div>
       </header>
     </div>
