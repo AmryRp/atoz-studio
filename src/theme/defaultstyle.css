@@ -42,6 +42,7 @@ body {
   justify-content: center !important;
   align-items: center !important;
   background: #f9f9f9 !important;
+  height: 4800px !important;
 }
 
 /*NAVIGATOR ANIMATION*/
@@ -87,7 +88,6 @@ body {
   font-size: 20px !important;
   transition: 0.5s !important;
   color: #10131f !important;
-
 }
 
 .navigation ul li.active a .icon {
@@ -128,7 +128,7 @@ body {
 }
 
 .indicator::before {
-  content: '' !important;
+  content: "" !important;
   position: absolute !important;
   top: 25px !important;
   left: -30px !important;
@@ -140,7 +140,7 @@ body {
 }
 
 .indicator::after {
-  content: '' !important;
+  content: "" !important;
   position: absolute !important;
   top: 25px !important;
   right: -30px !important;
@@ -151,20 +151,20 @@ body {
   box-shadow: -15px -18px #e6e5fc !important;
 }
 
-.navigation ul li:nth-child(1).active~.indicator {
-  transform: translateX(calc(70px *0)) !important;
+.navigation ul li:nth-child(1).active ~ .indicator {
+  transform: translateX(calc(70px * 0)) !important;
 }
 
-.navigation ul li:nth-child(2).active~.indicator {
-  transform: translateX(calc(70px *1)) !important;
+.navigation ul li:nth-child(2).active ~ .indicator {
+  transform: translateX(calc(70px * 1)) !important;
 }
 
-.navigation ul li:nth-child(3).active~.indicator {
-  transform: translateX(calc(70px *2)) !important;
+.navigation ul li:nth-child(3).active ~ .indicator {
+  transform: translateX(calc(70px * 2)) !important;
 }
 
-.navigation ul li:nth-child(4).active~.indicator {
-  transform: translateX(calc(70px *3)) !important;
+.navigation ul li:nth-child(4).active ~ .indicator {
+  transform: translateX(calc(70px * 3)) !important;
 }
 
 .Dashboard {
@@ -178,7 +178,7 @@ body {
   padding: 48px !important;
   position: relative !important;
   text-align: center;
-  color: #007bb4 !important;
+  color: #dceef6 !important;
 }
 
 .upperLogo {
@@ -192,7 +192,7 @@ body {
   border-radius: 10%;
 }
 
-.BannerImg{
+.BannerImg {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -200,7 +200,7 @@ body {
   /* filter: hue-rotate(190deg); */
 }
 
-.CarouselStyle{
+.CarouselStyle {
   /* display: block; */
   margin-left: auto;
   margin-right: auto;
@@ -208,5 +208,67 @@ body {
   /* color: #fff; */
   /* background: #bed5ff; */
   text-align: center !important;
-  opacity: 0.7; 
+  opacity: 0.7;
+}
+
+.ThreeCanvas {
+  width: 50vw;
+  height: 50vh;
+  position: relative !important;
+  border-radius: 1px;
+}
+
+#container {
+  background-color: rgb(150, 202, 255);
+  overflow: hidden;
+  width: 90%;
+  align-self: center;
+}
+#inner {
+  overflow: hidden;
+  width: 100%;
+}
+
+.child {
+  float: left;
+  width: 50%;
+}
+
+.firstWord {
+  position: relative !important;
+  padding-left: -1em;
+  padding-top: 0.5em;
+  margin-left: -1em;
+  font-family: Sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 61px;
+  letter-spacing: -2.8px;
+  word-spacing: 0px;
+}
+
+input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+}
+
+label {
+  font-weight: 800;
+}
+.LabelColor{
+  position: relative !important;
+  padding-left: -1em;
+  padding-top: 0.5em;
+  margin-left: -3.1em;
+  font-family: Sans-serif;
+  word-spacing: 0px;
 }
