@@ -1,14 +1,12 @@
 import React, { useRef, useState, Suspense } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import Scene from "../../resource/Icons";
 import {
   
   OrbitControls,
   PerspectiveCamera,
-} from "@react-three/drei";
+} from "@react-three/drei/core";
 import { AmbientLight } from "three";
-import Scene from "../../resource/Icons";
-
 const ShowcaseBox = () => {
   const [color2, setColor2] = useState("#ffffff");
   const [color1, setColor1] = useState("#ffffff");
@@ -61,7 +59,7 @@ const ShowcaseBox = () => {
         </div>
         <div className="colors child">
           <div>
-              <h1 className="firstWord"> Make Your Own 3D customizable Model
+              <h1 className="firstWord"> Make Your Own 3D custom Model
               </h1>
           </div>
           <div className="LabelColor">
@@ -76,9 +74,6 @@ const ShowcaseBox = () => {
               value={color2}
               onChange={(e) => setColor2(e.target.value)}
             />
-            <label for="color2">  Main Color</label>
-          </div>
-          <div className="LabelColor">
             <input
               type="color"
               id="color1"
@@ -86,9 +81,6 @@ const ShowcaseBox = () => {
               value={color1}
               onChange={(e) => setColor1(e.target.value)}
             />
-            <label for="color1">  Second Color</label>
-          </div>
-          <div className="LabelColor">
             <input
               type="color"
               id="color3"
@@ -96,7 +88,6 @@ const ShowcaseBox = () => {
               value={color3}
               onChange={(e) => setColor3(e.target.value)}
             />
-            <label for="color3">  Third Color</label>
           </div>
         </div>
       </div>

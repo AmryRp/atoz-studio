@@ -47,13 +47,14 @@ body {
 
 /*NAVIGATOR ANIMATION*/
 .navigation {
-  position: relative !important;
+  position: fixed !important;
   width: 100% !important;
   height: 60px !important;
   background: #e6e5fc !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
+  z-index: 1;
   /* border-radius: 10px !important; */
 }
 
@@ -88,6 +89,7 @@ body {
   font-size: 20px !important;
   transition: 0.5s !important;
   color: #10131f !important;
+  margin-top: 8px;
 }
 
 .navigation ul li.active a .icon {
@@ -151,19 +153,19 @@ body {
   box-shadow: -15px -18px #e6e5fc !important;
 }
 
-.navigation ul li:nth-child(1).active ~ .indicator {
+.navigation ul li:nth-child(1).active~.indicator {
   transform: translateX(calc(70px * 0)) !important;
 }
 
-.navigation ul li:nth-child(2).active ~ .indicator {
+.navigation ul li:nth-child(2).active~.indicator {
   transform: translateX(calc(70px * 1)) !important;
 }
 
-.navigation ul li:nth-child(3).active ~ .indicator {
+.navigation ul li:nth-child(3).active~.indicator {
   transform: translateX(calc(70px * 2)) !important;
 }
 
-.navigation ul li:nth-child(4).active ~ .indicator {
+.navigation ul li:nth-child(4).active~.indicator {
   transform: translateX(calc(70px * 3)) !important;
 }
 
@@ -182,9 +184,9 @@ body {
 }
 
 .upperLogo {
-  margin: 10px;
-  height: 64px !important;
-  width: 64px !important;
+  height: 56px !important;
+  width: 56px !important;
+  margin-top: 10px;
 }
 
 .searchBox {
@@ -213,7 +215,7 @@ body {
 
 .ThreeCanvas {
   width: 50vw;
-  height: 50vh;
+  height: 60vh;
   position: relative !important;
   border-radius: 1px;
 }
@@ -221,9 +223,16 @@ body {
 #container {
   background-color: rgb(150, 202, 255);
   overflow: hidden;
-  width: 90%;
-  align-self: center;
+  width: 98%;
+  height: 800px;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+  display: flex;
+  margin-Left: auto;
+  margin-Right: auto;
 }
+
 #inner {
   overflow: hidden;
   width: 100%;
@@ -238,7 +247,7 @@ body {
   position: relative !important;
   padding-left: -1em;
   padding-top: 0.5em;
-  margin-left: -1em;
+  margin-left: -1.6em;
   font-family: Sans-serif;
   font-size: 48px;
   font-weight: 900;
@@ -246,6 +255,7 @@ body {
   line-height: 61px;
   letter-spacing: -2.8px;
   word-spacing: 0px;
+  color: aliceblue;
 }
 
 input[type="color"] {
@@ -254,9 +264,11 @@ input[type="color"] {
   width: 32px;
   height: 32px;
 }
+
 input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0;
 }
+
 input[type="color"]::-webkit-color-swatch {
   border: none;
 }
@@ -264,11 +276,12 @@ input[type="color"]::-webkit-color-swatch {
 label {
   font-weight: 800;
 }
-.LabelColor{
+
+.LabelColor {
   position: relative !important;
   padding-left: -1em;
   padding-top: 0.5em;
-  margin-left: -3.1em;
+  margin-left: -5.1em;
   font-family: Sans-serif;
   word-spacing: 0px;
 }
