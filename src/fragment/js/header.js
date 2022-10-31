@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaHome, FaPhone, FaSlideshare, FaPhotoVideo } from "react-icons/fa";
+import { FaHome, FaPhoneAlt, FaSlideshare, FaPhotoVideo } from "react-icons/fa";
 import "../../theme/defaultstyle.css";
 import { ReactComponent as ReactLogo } from "../../resource/32.svg";
 import { Input } from 'antd';
@@ -46,7 +46,7 @@ const Header = () => {
         id: "4",
         idn: "profil akun",
         en: "Profile",
-        iconName: "FaPhone",
+        iconName: "FaPhoneAlt",
       },
     ]
   )
@@ -63,8 +63,8 @@ const Header = () => {
   }
 
   const iconLoad = (props) => {
-    if (props === "FaPhone") {
-      return <FaPhone />
+    if (props === "FaPhoneAlt") {
+      return <FaPhoneAlt />
     }
     if (props === "FaSlideshare") {
       return <FaSlideshare />

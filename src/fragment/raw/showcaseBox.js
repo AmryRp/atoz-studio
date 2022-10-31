@@ -1,5 +1,5 @@
 import React, { useRef, useState, Suspense } from "react";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import {gl , Canvas, useFrame, useLoader } from "@react-three/fiber";
 import Scene from "../../resource/Icons";
 import {
   
@@ -12,15 +12,27 @@ const ShowcaseBox = () => {
   const [color1, setColor1] = useState("#ffffff");
   const [color3, setColor3] = useState("#ffffff");
 
+  document.getElementById('save-button').onclick=()=>{
+    saveImage()
+  }
+  
+  function saveImage() {
+    const canvas =  document.getElementsByTagName("canvas")[0]
+    const image = canvas.toDataURL("image/png");
+    const a = document.createElement("a");
+    a.href = image.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+    a.download="image.png"
+    a.click();
+  }  
   return (
     <div id="container">
       <div id="inner">
         <div className="ThreeCanvas child">
-          <Canvas>
+          <Canvas gl={{ preserveDrawingBuffer: true }}>
             <OrbitControls
-              enablePan={true}
-              enableZoom={true}
-              enableRotate={true}
+              enablePan={false}
+              enableZoom={false}
+              enableRotate={false}
             />
             <PerspectiveCamera />
             <ambientLight />
@@ -32,23 +44,7 @@ const ShowcaseBox = () => {
               castShadow
             />
             <Scene
-              objectPos={{x:0,y:2,z:0}}
-              customColors={{
-                color1: color1,
-                color2: color2,
-                color3: color3,
-              }}
-            />
-            <Scene
-              objectPos={{x:0,y:0,z:0}}
-              customColors={{
-                color1: color1,
-                color2: color2,
-                color3: color3,
-              }}
-            />
-            <Scene
-              objectPos={{x:0,y:-2,z:0}}
+              objectPos={{x:1,y:1,z:0}}
               customColors={{
                 color1: color1,
                 color2: color2,
@@ -89,6 +85,9 @@ const ShowcaseBox = () => {
               onChange={(e) => setColor3(e.target.value)}
             />
           </div>
+        <div className="button-container">
+          <button  id="save-button"> save image</button>
+        </div>
         </div>
       </div>
     </div>

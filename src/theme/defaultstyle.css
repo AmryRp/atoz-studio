@@ -184,9 +184,9 @@ body {
 }
 
 .upperLogo {
-  height: 56px !important;
-  width: 56px !important;
-  margin-top: 10px;
+  height: 52px !important;
+  width: 52px !important;
+  margin-bottom: -10px;
 }
 
 .searchBox {
@@ -236,6 +236,7 @@ body {
 #inner {
   overflow: hidden;
   width: 100%;
+  margin: 6em;
 }
 
 .child {
@@ -284,4 +285,61 @@ label {
   margin-left: -5.1em;
   font-family: Sans-serif;
   word-spacing: 0px;
+}
+
+#save-button{
+  background-color: #2196f3;
+  border: 0;
+  border-radius: 10px;
+  color: white;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+#save-button:active{
+  background-color: #234fa1;
+}
+
+.button-container{
+  justify-content: right;
+  display: flex;
+}
+@media only screen and (max-width:200px) {
+  .upperLogo {
+    height: 32px !important;
+    width: 32px !important;
+    margin-bottom: -26px;
+  }
+}
+@media only screen and (max-width:640px) {
+  #container {
+    display: block;
+  }
+  .navigation ul li{
+    display: none;
+  }
+  .indicator{
+    display: none;
+  }
+  .upperLogo {
+    height: 32px !important;
+    width: 32px !important;
+    margin-bottom: -20px;
+  }
+}
+@media only screen and (max-width:800px) {
+  #container {
+    display: block;
+  }
+  .navigation ul li{
+    display: none;
+  }
+  .indicator{
+    display: none;
+  }
+  .upperLogo {
+    height: 40px !important;
+    width: 40px !important;
+    margin-bottom: -20px;
+  }
 }
