@@ -50,7 +50,7 @@ body {
   position: fixed !important;
   width: 100% !important;
   height: 60px !important;
-  background: #e6e5fc !important;
+  background: #FEB139 !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -94,14 +94,14 @@ body {
 
 .navigation ul li.active a .icon {
   transform: translateY(45px) !important;
-  color: #2196f3 !important;
+  color: #293462 !important;
   font-size: 35px !important;
   transition: 0.3s;
 }
 
 .navigation ul li a .text {
   position: absolute !important;
-  color: #234fa1 !important;
+  color: #293462 !important;
   padding: 2px 7px !important;
   border-radius: 12px !important;
   font-weight: 400 !important;
@@ -123,7 +123,7 @@ body {
   top: 35px !important;
   width: 70px !important;
   height: 70px !important;
-  background: #e6e5fc !important;
+  background: #FEB139 !important;
   border-radius: 50% !important;
   z-index: 1 !important;
   transition: 0.5s !important;
@@ -138,7 +138,7 @@ body {
   height: 30px !important;
   background: transparent !important;
   border-radius: 50% !important;
-  box-shadow: 15px -18px #e6e5fc !important;
+  box-shadow: 15px -18px #FEB139 !important;
 }
 
 .indicator::after {
@@ -150,7 +150,7 @@ body {
   height: 30px !important;
   background: transparent !important;
   border-radius: 50% !important;
-  box-shadow: -15px -18px #e6e5fc !important;
+  box-shadow: -15px -18px #FEB139 !important;
 }
 
 .navigation ul li:nth-child(1).active~.indicator {
@@ -224,7 +224,7 @@ body {
   background-color: #293462;
   overflow: hidden;
   width: 98%;
-  height: 800px;
+  height: 100vh;
   align-items: center;
   flex: 1;
   justify-content: center;
@@ -236,7 +236,7 @@ body {
 #inner {
   overflow: hidden;
   width: 100%;
-  margin: 6em 16em;
+  margin: 100px 16em;
 }
 
 .child {
@@ -264,14 +264,17 @@ input[type="color"] {
   border: none;
   width: 32px;
   height: 32px;
+  border-radius: 100%;
 }
 
 input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0;
+  border-radius: 100%;
 }
 
 input[type="color"]::-webkit-color-swatch {
   border: none;
+  border-radius: 100%;
 }
 
 label {
@@ -288,20 +291,22 @@ label {
 }
 
 .description-title{
-  color: white;
+  color: #d4d8c5;
 }
 
 #save-button {
   background-color: #D61C4E;
   border: 0;
   border-radius: 10px;
-  color: wheat;
+  color: white;
   padding: 6px 12px;
   cursor: pointer;
+  align-items: center;
+  text-transform: capitalize;
 }
 
 #save-button:active {
-  background-color: #234fa1;
+  background-color: #293462;
 }
 
 .button-container {
@@ -309,71 +314,11 @@ label {
   display: flex;
 }
 
-@media only screen and (max-width:640px) {
-  #container {
-    display: flex;
-  }
-
-  .navigation ul li {
-    display: none;
-  }
-
-  .indicator {
-    display: none;
-  }
-
-  .upperLogo {
-    height: 32px !important;
-    width: 32px !important;
-    margin-bottom: -20px;
-    margin-left: 10px;
-  }
-
-  #inner {
-    display: flex;
-    width: 100%;
-    margin: 1em;
-  }
-
-  .firstWord {
-    position: relative !important;
-    padding-left: -1em;
-    padding-top: 0.5em;
-    margin-left: 0em;
-    font-family: Sans-serif;
-    font-size: 24px;
-    font-weight: 800;
-    text-transform: uppercase;
-    line-height: 30px;
-    letter-spacing: -1px;
-    word-spacing: 0px;
-    color: aliceblue;
-  }
-  .LabelColor {
-    position: relative !important;
-    padding-left: -1em;
-    padding-top: 0.5em;
-    margin-left: 0em;
-    font-family: Sans-serif;
-    word-spacing: 0px;
-  }
-  .ThreeCanvas {
-    width: 100%;
-    height: 60vh;
-    position: absolute !important;
-    border-radius: 1px;
-  }
-  .button-container {
-    position: sticky !important;
-    justify-content: right;
-    display: flex;
-    margin-right: -100px;
-  }
-}
-
 @media only screen and (max-width:800px) {
   #container {
     display: flex;
+    height: 100vh;
+    margin-top: 10px;
   }
 
   .navigation ul li {
@@ -429,21 +374,125 @@ label {
     display: flex;
     margin-right: -160px;
   }
-  @media only screen and (max-width:200px) {
-    .upperLogo {
-      height: 32px !important;
-      width: 32px !important;
-      margin-bottom: -26px;
-    }
-    .button-container {
-      position: sticky !important;
-      justify-content: right;
-      display: flex;
-      margin-right: -30px;
-    }
+  
+@media only screen and (max-width:640px) {
+  #container {
+    display: flex;
+    margin-top: 10px;
+  }
+
+  .navigation ul li {
+    display: none;
+  }
+
+  .indicator {
+    display: none;
+  }
+
+  .upperLogo {
+    height: 32px !important;
+    width: 32px !important;
+    margin-bottom: -20px;
+    margin-left: 10px;
+  }
+
+  #inner {
+    display: flex;
+    width: 100%;
+    margin: 1em;
+  }
+
+  .firstWord {
+    position: relative !important;
+    padding-left: -1em;
+    padding-top: 0.5em;
+    margin-left: 0em;
+    font-family: Sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 30px;
+    letter-spacing: -1px;
+    word-spacing: 0px;
+    color: aliceblue;
+  }
+  .LabelColor {
+    position: relative !important;
+    padding-left: -1em;
+    padding-top: 0.5em;
+    margin-left: 0em;
+    font-family: Sans-serif;
+    word-spacing: 0px;
+  }
+  .ThreeCanvas {
+    width: 100%;
+    height: 60vh;
+    position: absolute !important;
+    border-radius: 1px;
+  }
+  .button-container {
+    position: sticky !important;
+    justify-content: right;
+    display: flex;
+    margin-right: -140px;
+  }
+}
+@media only screen and (max-width:480px) {
+  #container {
+    display: flex;
+    margin-top: 50px;
+  }
+  .upperLogo {
+    height: 32px !important;
+    width: 32px !important;
+    margin-bottom: -26px;
+  }
+  .button-container {
+    position: sticky !important;
+    justify-content: right;
+    display: flex;
+    margin-right: -160px;
   }
   
+}
+@media only screen and (max-height:480px) {
+  #container {
+    display: flex;
+    margin-top: 50px;
+  }
+  .upperLogo {
+    height: 32px !important;
+    width: 32px !important;
+    margin-bottom: -26px;
+  }
+  .button-container {
+    position: sticky !important;
+    justify-content: right;
+    display: flex;
+    margin-right: -160px;
+  }
+  .firstWord {
+    position: relative !important;
+    padding-left: -1em;
+    padding-top: 0.5em;
+    margin-left: 0em;
+    margin-top: 91px;
+    font-family: Sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 32px;
+    letter-spacing: -1px;
+    word-spacing: 0px;
+    color: aliceblue;
+  }
+}
+
 @media only screen and (max-width:320px) {
+  #container {
+    display: flex;
+    margin-top: 50px;
+  }
   .upperLogo {
     height: 32px !important;
     width: 32px !important;
@@ -454,6 +503,59 @@ label {
     justify-content: right;
     display: flex;
     margin-right: -100px;
+  }
+  
+}
+
+@media only screen and (max-height:320px) {
+  #container {
+    display: flex;
+    margin-top: 10px;
+  }
+  .upperLogo {
+    height: 32px !important;
+    width: 32px !important;
+    margin-bottom: -26px;
+  }
+  .button-container {
+    position: sticky !important;
+    justify-content: right;
+    display: flex;
+    margin-right: -100px;
+  }
+  .firstWord {
+    position: relative !important;
+    padding-left: -1em;
+    padding-top: 0.5em;
+    margin-left: 0em;
+    margin-top: 5px;
+    font-family: Sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 32px;
+    letter-spacing: -1px;
+    word-spacing: 0px;
+    color: aliceblue;
+  }
+}
+
+
+@media only screen and (max-width:200px) {
+  #container {
+    display: flex;
+    margin-top: 50px;
+  }
+  .upperLogo {
+    height: 32px !important;
+    width: 32px !important;
+    margin-bottom: -26px;
+  }
+  .button-container {
+    position: sticky !important;
+    justify-content: right;
+    display: flex;
+    margin-right: -30px;
   }
 }
 }
