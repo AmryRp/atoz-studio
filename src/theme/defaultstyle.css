@@ -41,7 +41,7 @@
 body {
   justify-content: center !important;
   align-items: center !important;
-  background: #f9f9f9 !important;
+  background: #293462 !important;
   height: 4800px !important;
 }
 
@@ -221,7 +221,7 @@ body {
 }
 
 #container {
-  background-color: rgb(150, 202, 255);
+  background-color: #293462;
   overflow: hidden;
   width: 98%;
   height: 800px;
@@ -236,7 +236,7 @@ body {
 #inner {
   overflow: hidden;
   width: 100%;
-  margin: 6em;
+  margin: 6em 16em;
 }
 
 .child {
@@ -254,7 +254,7 @@ body {
   font-weight: 900;
   text-transform: uppercase;
   line-height: 61px;
-  letter-spacing: -2.8px;
+  letter-spacing: -0.7px;
   word-spacing: 0px;
   color: aliceblue;
 }
@@ -287,11 +287,15 @@ label {
   word-spacing: 0px;
 }
 
+.description-title{
+  color: white;
+}
+
 #save-button {
-  background-color: #2196f3;
+  background-color: #D61C4E;
   border: 0;
   border-radius: 10px;
-  color: white;
+  color: wheat;
   padding: 6px 12px;
   cursor: pointer;
 }
@@ -303,14 +307,6 @@ label {
 .button-container {
   justify-content: right;
   display: flex;
-}
-
-@media only screen and (max-width:200px) {
-  .upperLogo {
-    height: 32px !important;
-    width: 32px !important;
-    margin-bottom: -26px;
-  }
 }
 
 @media only screen and (max-width:640px) {
@@ -366,6 +362,12 @@ label {
     height: 60vh;
     position: absolute !important;
     border-radius: 1px;
+  }
+  .button-container {
+    position: sticky !important;
+    justify-content: right;
+    display: flex;
+    margin-right: -100px;
   }
 }
 
@@ -427,4 +429,31 @@ label {
     display: flex;
     margin-right: -160px;
   }
+  @media only screen and (max-width:200px) {
+    .upperLogo {
+      height: 32px !important;
+      width: 32px !important;
+      margin-bottom: -26px;
+    }
+    .button-container {
+      position: sticky !important;
+      justify-content: right;
+      display: flex;
+      margin-right: -30px;
+    }
+  }
+  
+@media only screen and (max-width:320px) {
+  .upperLogo {
+    height: 32px !important;
+    width: 32px !important;
+    margin-bottom: -26px;
+  }
+  .button-container {
+    position: sticky !important;
+    justify-content: right;
+    display: flex;
+    margin-right: -100px;
+  }
+}
 }

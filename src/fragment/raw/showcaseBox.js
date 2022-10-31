@@ -8,9 +8,9 @@ import {
 } from "@react-three/drei/core";
 import { AmbientLight } from "three";
 const ShowcaseBox = () => {
-  const [color2, setColor2] = useState("#ffffff");
-  const [color1, setColor1] = useState("#ffffff");
-  const [color3, setColor3] = useState("#ffffff");
+  const [color2, setColor2] = useState("#293462");
+  const [color1, setColor1] = useState("#D61C4E");
+  const [color3, setColor3] = useState("#FEB139");
 
   function saveImage() {
     const canvas = document.getElementsByTagName("canvas")[0]
@@ -55,7 +55,7 @@ const ShowcaseBox = () => {
             </h1>
           </div>
           <div className="LabelColor">
-            <h4> lets try make your own Color :
+            <h4 className="description-title"> lets try make your own Color :
             </h4>
           </div>
           <div className="LabelColor">
