@@ -1,8 +1,8 @@
 import React, { useRef, useState, Suspense } from "react";
-import {gl , Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { gl, Canvas, useFrame, useLoader } from "@react-three/fiber";
 import Scene from "../../resource/Icons";
 import {
-  
+
   OrbitControls,
   PerspectiveCamera,
 } from "@react-three/drei/core";
@@ -12,18 +12,14 @@ const ShowcaseBox = () => {
   const [color1, setColor1] = useState("#ffffff");
   const [color3, setColor3] = useState("#ffffff");
 
-  document.getElementById('save-button').onclick=()=>{
-    saveImage()
-  }
-  
   function saveImage() {
-    const canvas =  document.getElementsByTagName("canvas")[0]
+    const canvas = document.getElementsByTagName("canvas")[0]
     const image = canvas.toDataURL("image/png");
     const a = document.createElement("a");
     a.href = image.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-    a.download="image.png"
+    a.download = "image.png"
     a.click();
-  }  
+  }
   return (
     <div id="container">
       <div id="inner">
@@ -44,7 +40,7 @@ const ShowcaseBox = () => {
               castShadow
             />
             <Scene
-              objectPos={{x:1,y:1,z:0}}
+              objectPos={{ x: 1, y: 1, z: 0 }}
               customColors={{
                 color1: color1,
                 color2: color2,
@@ -55,12 +51,12 @@ const ShowcaseBox = () => {
         </div>
         <div className="colors child">
           <div>
-              <h1 className="firstWord"> Make Your Own 3D custom Model
-              </h1>
+            <h1 className="firstWord"> Make Your Own 3D custom Model
+            </h1>
           </div>
           <div className="LabelColor">
-              <h4> lets try make your own Color :
-              </h4>
+            <h4> lets try make your own Color :
+            </h4>
           </div>
           <div className="LabelColor">
             <input
@@ -85,9 +81,9 @@ const ShowcaseBox = () => {
               onChange={(e) => setColor3(e.target.value)}
             />
           </div>
-        <div className="button-container">
-          <button  id="save-button"> save image</button>
-        </div>
+          <div className="button-container">
+            <button id="save-button" onClick={() => saveImage()}> save image</button>
+          </div>
         </div>
       </div>
     </div>
