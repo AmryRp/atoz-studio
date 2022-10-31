@@ -38,7 +38,7 @@ const Dashboard = () => {
           );
         })}
       </Carousel> */}
-      <div className="Dashboard">
+      <div className="Dashboard" id="outer-container">
         <div className="App-Body">
 
           <div>

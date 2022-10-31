@@ -1,0 +1,28 @@
+.about-us{
+    height: 1080px;
+    color: aliceblue;
+    background-color: aliceblue;
+}
+.paragraph-about-us{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+.paragraph-about-us h1{
+    position: relative !important;
+    font-family: Sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 61px;
+    letter-spacing: -0.7px;
+}
+.paragraph-about-us h3{
+    font-family: Sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
