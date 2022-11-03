@@ -1,0 +1,85 @@
+import React, { useRef } from 'react'
+
+
+function AtozLogo({ ...props }) {
+    
+    const group = useRef()
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fillRule="evenodd"
+            strokeLinecap="round"
+            strokeMiterlimit="1"
+            clipRule="evenodd"
+            viewBox="0 0 2265 2265"
+            ref={group} {...props} dispose={null}
+        >
+            <g id="Normal-Logo">
+                <path d="M1110.35,685.454l1065.97,1065.97l-728.12,-2.9l39.039,-38.233" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1593.3,1606.27l2.813,-2.61" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1440.9,800.569l1116.24,1101.55l-1474.53,-0.705l298.395,-302.683" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1484.13,1494.59l3.98,-4.493" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1805.62,1602.43l-2.131,-2.131" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1695.54,1492.36l-215.254,-215.254l-1037.44,1037.44" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+            </g>
+            <g id="Rectangle-Medium">
+                <g>
+                    <path d="M894.31,692.158l1142.94,1142.94l-728.121,-2.9l39.039,-38.233" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1454.24,1689.94l2.813,-2.61" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1301.84,884.241l1006.68,993.209" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M2318.31,1985.75l-1374.76,-0.657l298.395,-302.683" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1345.07,1578.27l3.98,-4.493" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1666.55,1686.11l-2.132,-2.132" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1556.48,1576.03l-215.254,-215.254l-658.48,658.481" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                </g>
+                <path d="M2380.51,619.487l-1761.03,-0l-0,1761.03l1761.03,0l0,-1761.03Zm-91.666,91.666l-0,1577.69c-0,-0 -1577.69,-0 -1577.69,-0c0,-0 0,-1577.69 0,-1577.69c0,0 1577.69,0 1577.69,0l-0,0Z"  />
+            </g>
+            <g id="Round-Medium">
+                <g>
+                    <path d="M1120.3,742.559l985.406,985.406l-728.121,-2.9l39.039,-38.233" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1522.7,1582.81l2.813,-2.609" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1370.3,777.109l974.422,961.6" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M2287.73,1878.57l-1275.71,-0.61l298.396,-302.683" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1413.53,1471.13l3.979,-4.493" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1735.01,1578.97l-2.132,-2.132" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1624.94,1468.9l-215.254,-215.253l-678.797,678.797" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                </g>
+                <path d="M2294.22,1876.85c-141.206,296.79 -443.92,502.146 -794.218,502.146c-278.633,-0 -527.159,-129.926 -688.248,-332.447" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M734.575,1932.19c-72.289,-127.655 -113.566,-275.141 -113.566,-432.192c0,-284.063 135.04,-536.835 344.37,-697.566" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1093.48,712.932c55.487,-27.834 127.577,-49.091 188.986,-64.749c69.58,-17.742 142.466,-27.174 217.538,-27.174c485.128,0 878.991,393.863 878.991,878.991c-0,83.721 -11.73,164.723 -33.635,241.453" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+            </g>
+            <g id="Medium">
+                <path d="M1594.62,1209.79l452.224,452.224l-728.12,-2.899l39.039,-38.234" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1463.83,1516.86l2.813,-2.61" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1576.09,1812.3l-622.932,-0.298l298.395,-302.682" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1354.66,1405.18l3.979,-4.492" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1676.15,1513.02l-2.131,-2.132" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1566.08,1402.95l-215.254,-215.254l-251.544,251.544" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+            </g>
+            <g id="Small">
+                <path d="M1467.57,1140.54l415.199,415.199" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1830.64,1703.52l-527.411,-2.1l39.039,-38.234" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <g>
+                    <path d="M1448.43,1558.08l2.813,-2.61" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1339.26,1446.41l3.979,-4.493" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1660.74,1554.25l-2.132,-2.131" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                </g>
+                <path d="M1140.56,1648.49l95.491,-96.863" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1550.58,1445.26l-252.215,-252.216" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1500,1050.92c247.855,-0 449.082,201.227 449.082,449.082c0,247.855 -201.227,449.082 -449.082,449.082c-247.855,0 -449.082,-201.227 -449.082,-449.082c-0,-247.855 201.227,-449.082 449.082,-449.082Zm-0,91.667c197.263,-0 357.415,160.152 357.415,357.415c0,197.263 -160.152,357.415 -357.415,357.415c-197.263,0 -357.415,-160.152 -357.415,-357.415c-0,-197.263 160.152,-357.415 357.415,-357.415Z" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+            </g>
+            <g id="Xtra-Small">
+                <g>
+                    <path d="M1448.43,1558.08l2.813,-2.61" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1339.26,1446.41l3.979,-4.493" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                    <path d="M1660.74,1554.25l-2.132,-2.131" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                </g>
+                <path d="M1551.24,1442.24l-191.598,-191.599" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+                <path d="M1500,1150.71c192.776,-0 349.286,156.51 349.286,349.286c0,192.776 -156.51,349.286 -349.286,349.286c-192.776,0 -349.286,-156.51 -349.286,-349.286c-0,-192.776 156.51,-349.286 349.286,-349.286Zm0,91.666c142.184,0 257.62,115.436 257.62,257.62c-0,142.184 -115.436,257.62 -257.62,257.62c-142.184,-0 -257.62,-115.436 -257.62,-257.62c0,-142.184 115.436,-257.62 257.62,-257.62Z" fill={props.logoProperty.fill} stroke={props.logoProperty.strokeColor} strokeWidth={props.logoProperty.strokeWidth} />
+            </g>
+        </svg>
+
+    )
+}
+
+export default AtozLogo;

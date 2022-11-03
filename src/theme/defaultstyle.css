@@ -184,9 +184,27 @@ body {
 }
 
 .upperLogo {
-  height: 52px !important;
-  width: 52px !important;
-  margin-bottom: -10px;
+  height: 72px !important;
+  width: 72px !important;
+  margin-bottom: 10px;
+}
+.upperLogo #Normal-Logo{
+  display: none;
+}
+.upperLogo #Rectangle-Medium{
+  display: none;
+}
+.upperLogo #Round-Medium{
+  display: none;
+}
+.upperLogo #Medium{
+  display: none;
+}
+.upperLogo #Xtra-Small{
+  display: none;
+}
+.upperLogo #Small{
+  display: block;
 }
 
 .searchBox {
@@ -330,8 +348,8 @@ label {
   }
 
   .upperLogo {
-    height: 40px !important;
-    width: 40px !important;
+    height: 100px !important;
+    width: 100px !important;
     margin-bottom: -20px;
     margin-left: 10px;
   }
@@ -390,8 +408,8 @@ label {
   }
 
   .upperLogo {
-    height: 32px !important;
-    width: 32px !important;
+    height: 100px !important;
+    width: 100px !important;
     margin-bottom: -20px;
     margin-left: 10px;
   }
@@ -443,8 +461,8 @@ label {
     margin-top: 50px;
   }
   .upperLogo {
-    height: 32px !important;
-    width: 32px !important;
+    height: 100px !important;
+    width: 100px !important;
     margin-bottom: -26px;
   }
   .button-container {
@@ -461,8 +479,8 @@ label {
     margin-top: 50px;
   }
   .upperLogo {
-    height: 32px !important;
-    width: 32px !important;
+    height: 100px !important;
+    width: 100px !important;;
     margin-bottom: -26px;
   }
   .button-container {
@@ -494,8 +512,8 @@ label {
     margin-top: 50px;
   }
   .upperLogo {
-    height: 32px !important;
-    width: 32px !important;
+    height: 100px !important;
+    width: 100px !important;
     margin-bottom: -26px;
   }
   .button-container {
@@ -513,8 +531,8 @@ label {
     margin-top: 10px;
   }
   .upperLogo {
-    height: 32px !important;
-    width: 32px !important;
+    height: 100px !important;
+    width: 100px !important;
     margin-bottom: -26px;
   }
   .button-container {
@@ -542,6 +560,12 @@ label {
 
 
 @media only screen and (max-width:200px){
+  .upperLogo #Xtra-Small{
+    display: block;
+  }
+  .upperLogo #Small{
+    display: none;
+  }
   #container {
     display: flex;
     margin-top: 50px;

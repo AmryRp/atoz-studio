@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { FaHome, FaPhoneAlt, FaSlideshare, FaPhotoVideo } from "react-icons/fa";
 import "../../theme/defaultstyle.css";
-import { ReactComponent as ReactLogo } from "../../resource/32.svg";
+import { ReactComponent as Mylogo } from "../../resource/Atoz_logo_web.svg";
 import { Input } from 'antd';
+import AtozLogo from "../../resource/AtozLogo";
 
 const { Search } = Input;
 
 const Header = () => {
+  // const [color3, setColor3] = useState("#10131f");
   const [users, setUser] = useState(
     [
       {
@@ -78,7 +80,13 @@ const Header = () => {
     <div className="App">
       <header className="App-header">
         <div className="navigation">
-          <ReactLogo className="upperLogo" />
+          <AtozLogo className="upperLogo"
+            logoProperty={{
+              strokeColor: '#10131f',
+              fill: "none",
+              strokeWidth: 91.67,
+            }} 
+          />
           <ul>
             {menus.map((menu) => {
               return (

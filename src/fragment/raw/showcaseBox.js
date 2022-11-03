@@ -2,11 +2,9 @@ import React, { useRef, useState, Suspense } from "react";
 import { gl, Canvas, useFrame, useLoader } from "@react-three/fiber";
 import Scene from "../../resource/Icons";
 import {
-
   OrbitControls,
   PerspectiveCamera,
 } from "@react-three/drei/core";
-import { AmbientLight } from "three";
 const ShowcaseBox = () => {
   const [color2, setColor2] = useState("#293462");
   const [color1, setColor1] = useState("#D61C4E");
