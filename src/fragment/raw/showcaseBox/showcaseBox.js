@@ -73,7 +73,7 @@ const ShowcaseBox = () => {
                 onChange={(e) => setColor3(e.target.value)}
               />                
               </div>
-              <button className="button-save">
+              <button className="button-save" onClick={()=>saveImage()}>
               Save Image
             </button>
             </div>
