@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../../theme/defaultstyle.css";
 import mask from '../../resource/hanya_mask.png';
 import { Carousel } from 'antd';
 

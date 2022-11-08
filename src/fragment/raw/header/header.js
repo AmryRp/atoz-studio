@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { FaHome, FaPhoneAlt, FaSlideshare, FaPhotoVideo } from "react-icons/fa";
-import "../../theme/defaultstyle.css";
-import { ReactComponent as Mylogo } from "../../resource/Atoz_logo_web.svg";
+// import "../../theme/defaultstyle.css";
+// import { ReactComponent as Mylogo } from "../../resource/Atoz_logo_web.svg";
 import { Input } from 'antd';
-import AtozLogo from "../../resource/AtozLogo";
+import AtozLogo from "../../../resource/AtozLogo";
 import { stack as Menu } from "react-burger-menu";
-
+import './header.css'
 const { Search } = Input;
 
 const Header = () => {
@@ -71,20 +71,18 @@ const Header = () => {
     return <FaHome />;
   };
   return (
-    <div className="App">
-      <header className="App-header">
         <div className="navigation">
-          <AtozLogo className="upperLogo"
+          {/* <AtozLogo className="upperLogo"
             logoProperty={{
               strokeColor: '#10131f',
               fill: "none",
               strokeWidth: 91.67,
             }} 
-          />
+          /> */}
           <ul>
-            {menus.map((menu) => {
+            {menus.map((menu, i) => {
               return (
-                <li key={menu.id} className={"list " + menu.active}>
+                <li key={i} className={"list " + menu.active}>
                   <a href="#" onClick={activeMenu}>
                     <span className="icon">{iconLoad(menu.iconName)}</span>
                     <span className="text">{menu.en}</span>
@@ -109,8 +107,6 @@ const Header = () => {
             <Search className="searchBox" placeholder="search... "/>
           </div> */}
         </div>
-      </header>
-    </div>
   );
 };
 

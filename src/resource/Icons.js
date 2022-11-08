@@ -14,7 +14,7 @@ import { useFrame } from '@react-three/fiber'
   })
   return (
     <group ref={group} {...props} dispose={null}>
-      <group position={[props.objectPos.x,props.objectPos.y,props.objectPos.z]} rotation={[0, -0.29, -0.32]} scale={0.8}>
+      <group position={[props.objectPos.x,props.objectPos.y,props.objectPos.z]} rotation={[0, -0.29, -0.12]} scale={1.8}>
         <mesh geometry={nodes.Sphere.geometry} material={materials['Material.001']} 
         material-color={props.customColors.color2} />
         <mesh geometry={nodes.Sphere_1.geometry} material={materials['Material.007']} 

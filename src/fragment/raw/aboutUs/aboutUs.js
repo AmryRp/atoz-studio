@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import "../../theme/defaultstyle.css";
-import "../../theme/aboutUs.css"
+import "./aboutUs.css"
 
 const AboutUs = () => {
   const [users, setUser] = useState({
