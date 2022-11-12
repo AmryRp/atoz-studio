@@ -5,6 +5,7 @@ import Header from './fragment/raw/header/header.js';
 import Dashboard from './fragment/raw/dashboard.js';
 import Showcase from './fragment/raw/showcaseBox/showcaseBox';
 import AboutUs from './fragment/raw/aboutUs/aboutUs';
+import Portofolio from './fragment/raw/portofolio/portofolio';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +14,7 @@ root.render(
     {/* <Dashboard /> */}
     <Showcase />
     <AboutUs/>
+    <Portofolio/>
   </React.StrictMode>,
 );
 

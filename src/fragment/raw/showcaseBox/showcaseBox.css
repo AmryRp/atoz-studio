@@ -1,31 +1,35 @@
+.container{
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    
+}
 
 .inner {
     display: flex;
-    margin: 0px 400px;
-    padding: 0 100px;
+    margin: auto;
     max-width: 1024px;
 }
 
 .inner-left {
-    margin: 300px 0px 200px;
+    flex: 1;
+    margin: auto;
+    max-width: 450px;
 }
 
 .inner-right {
-    margin: 300px 0px 200px;
+    flex: 1;
+    margin: auto;
+    margin-top: 100px;
     height: 100%;
 }
 
 .main-title {
     width: 100%;
     height: 100%;
-    /* height: 222px;
-    right: 439px;
-    top: 301px; */
     font-style: normal;
     font-weight: 800;
     font-size: 72px;
     line-height: 102.18%;
-    /* or 74px */
     text-transform: uppercase;
 
     background-color: #565656;
@@ -40,9 +44,6 @@
 .main-description {
     width: 100%;
     height: 100%;
-    /* height: 203px;
-    left: 977px; */
-    /* top: 562px; */
 
     font-family: 'Open Sans';
     font-style: normal;
@@ -128,7 +129,10 @@ input[type="color"]::-webkit-color-swatch {
     }
 
     .inner-left {
-        margin: -200px 0px 50px;
+        flex: 1;
+        margin: auto;
+        margin-top: -200px;
+        margin-bottom: 50px;
     }
 
     .inner-right {
@@ -165,6 +169,7 @@ input[type="color"]::-webkit-color-swatch {
         display: flex;
         margin: 0px 0px 50px;
         padding: 0px 20px;
+        max-width: 600px;
     }
 
     .inner-left {
@@ -179,15 +184,11 @@ input[type="color"]::-webkit-color-swatch {
     .main-title {
         width: 100%;
         height: 100%;
-        /* height: 222px;
-        right: 439px;
-        top: 301px; */
         margin: 90px 0 20px;
         font-style: normal;
         font-weight: 800;
         font-size: 48px;
         line-height: 102.18%;
-        /* or 74px */
         text-transform: uppercase;
 
         background-color: #565656;
@@ -202,16 +203,12 @@ input[type="color"]::-webkit-color-swatch {
     .main-description {
         width: 100%;
         height: 100%;
-        /* height: 203px;
-        left: 977px;
-        top: 562px; */
 
         font-family: 'Open Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 90%;
         line-height: 102.18%;
-        /* or 25px */
         text-transform: uppercase;
         color: #FFFFFF;
     }

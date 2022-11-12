@@ -8,9 +8,9 @@ import {
 import './showcaseBox.css'
 
 const ShowcaseBox = () => {
-  const [color2, setColor2] = useState("#4CB1B8");
-  const [color1, setColor1] = useState("#4CB1B8");
-  const [color3, setColor3] = useState("#4CB1B8");
+  const [color2, setColor2] = useState("#4158D0");
+  const [color1, setColor1] = useState("#C850C0");
+  const [color3, setColor3] = useState("#FFCC70");
 
   function saveImage() {
     const canvas = document.getElementsByTagName("canvas")[0]
@@ -21,6 +21,7 @@ const ShowcaseBox = () => {
     a.click();
   }
   return (
+    <div className="container">
       <div className="inner">
         <div className="inner-left">
           <div className="object-three">
@@ -49,8 +50,8 @@ const ShowcaseBox = () => {
               />
             </Canvas>
           </div>
-            <div className="color-chooser">
-              <div>
+          <div className="color-chooser">
+            <div>
               <input
                 type="color"
                 id="color2"
@@ -71,19 +72,20 @@ const ShowcaseBox = () => {
                 name="color3"
                 value={color3}
                 onChange={(e) => setColor3(e.target.value)}
-              />                
-              </div>
-              <button className="button-save" onClick={()=>saveImage()}>
+              />
+            </div>
+            <button className="button-save" onClick={() => saveImage()}>
               Save Image
             </button>
-            </div>
-            
+          </div>
+
         </div>
         <div className="inner-right">
           <h1 className="main-title">ORDER YOUR OWN 3D NOW !!!</h1>
           <p className="main-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
         </div>
       </div>
+    </div>
   );
 };
 

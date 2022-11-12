@@ -1,0 +1,23 @@
+.card-portofolio {
+    color: transparent;
+    
+}
+.ant-card-contain-grid .ant-card-body{
+    flex-wrap: none;
+}
+.card-grid {
+    width: '20%';
+    color: transparent;
+    text-align: center;
+}
+
+.portofolio-container{
+    position: relative;
+}
+
+.portofolio-image{
+    display: flex;
+    margin: auto;
+    max-width: 15vh;
+    background-color: transparent;
+}

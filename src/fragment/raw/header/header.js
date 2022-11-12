@@ -94,9 +94,9 @@ const Header = () => {
             
           </ul>
           <Menu right toggled={isOpen} toggle={setOpen} pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" }>
-          {menus.map((menu) => {
+          {menus.map((menu,i) => {
             return (
-                <a href="#" onClick={activeMenu}>
+                <a key={i} href="#" onClick={activeMenu}>
                   <span className="icon">{iconLoad(menu.iconName)}</span>
                   <span className="text">{menu.en}</span>
                 </a>

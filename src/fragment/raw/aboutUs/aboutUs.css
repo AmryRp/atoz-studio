@@ -1,26 +1,37 @@
 .about-us{
     height: 1020px;
+    z-index: 1;
 }
 .paragraph-about-us{
     align-items: center;
     text-align: center;
     justify-content: center;
-    position: relative;
     margin-left: auto;
     margin-right: auto;
+    color: aliceblue;
+    
 }
-.paragraph-about-us h1{
-    position: relative !important;
+.about-us-title {
     font-family: Sans-serif;
     font-size: 24px;
     font-weight: 900;
     text-transform: uppercase;
     line-height: 61px;
-    letter-spacing: -0.7px;
+    letter-spacing: 1px;
+    background: linear-gradient(180deg, rgba(171, 69, 112, 0.01) 0%, rgba(209, 72, 118, 0.01) 100%);
+    box-shadow: 4px 4px 8px rgba(52, 52, 52, 0.2), -4px -4px 8px rgba(255, 255, 255, 0.2), inset 4px 4px 8px rgba(255, 255, 255, 0.2), inset -4px -4px 8px rgba(49, 49, 49, 0.2);
+    
 }
-.paragraph-about-us h3{
+.about-us-description {
     font-family: Sans-serif;
     font-size: 20px;
     font-weight: 500;
     text-transform: capitalize;
+    margin: 0px 16px;
+}
+.bubble-about{
+    z-index: 0;
+    position: absolute !important;
+    max-width: 100%;
+    width: 100%;
 }
