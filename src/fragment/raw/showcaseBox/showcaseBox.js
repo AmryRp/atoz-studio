@@ -9,8 +9,8 @@ import './showcaseBox.css'
 
 const ShowcaseBox = () => {
   const [color2, setColor2] = useState("#fdcdb4");
-  const [color1, setColor1] = useState("#fdcdb4");
-  const [color3, setColor3] = useState("#fdcdb4");
+  const [color1, setColor1] = useState("#ff0000");
+  const [color3, setColor3] = useState("#0078ff");
 
   function saveImage() {
     const canvas = document.getElementsByTagName("canvas")[0]

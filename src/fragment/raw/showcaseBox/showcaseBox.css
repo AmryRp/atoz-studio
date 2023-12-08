@@ -116,7 +116,7 @@ input[type="color"]::-webkit-color-swatch {
     border: none;
     border-radius: 100px;
     background: linear-gradient(180deg, rgba(171, 69, 112, 0.01) 0%, rgba(209, 72, 118, 0.01) 100%);
-    box-shadow: 4px 4px 8px rgba(66, 66, 66, 0.2), -4px -4px 8px rgba(255, 255, 255, 0.2), inset -4px -4px 10px rgba(255, 255, 255, 0.2), inset 4px 4px 10px rgba(60, 60, 60, 0.2);
+    /* box-shadow: 4px 4px 8px rgba(66, 66, 66, 0.2), -4px -4px 8px rgba(255, 255, 255, 0.2), inset -4px -4px 10px rgba(255, 255, 255, 0.2), inset 4px 4px 10px rgba(60, 60, 60, 0.2); */
 
 }
 
