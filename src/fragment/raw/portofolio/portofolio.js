@@ -81,7 +81,7 @@ const Portofolio = () => {
     return (
         <div>
             <div className="portofolio-container">
-                {portofolios.map((porto, i) => {
+                {/* {portofolios.map((porto, i) => {
                     return (
                         <Card key={i} hoverable className="card-portofolio">
                             {porto.page.map((xxx, i) => {
@@ -93,7 +93,7 @@ const Portofolio = () => {
                             })}
                         </Card>
                     );
-                })}
+                })} */}
             </div>
         </div>
     );

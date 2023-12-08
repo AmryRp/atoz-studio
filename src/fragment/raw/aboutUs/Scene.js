@@ -58,7 +58,7 @@ export default function Scene({ setBg }) {
     <>
       <PerspectiveCamera makeDefault position={[0, 0, 4]} fov={60}>
         <a.ambientLight intensity={ambient} />
-        <a.pointLight ref={light} position-z={-19} intensity={env} color="#ffffff" />
+        <a.pointLight ref={light} position-z={-19} intensity={env} color="#fdcdb4" />
       </PerspectiveCamera>
       <Suspense fallback={null}>
         <a.mesh
@@ -74,7 +74,7 @@ export default function Scene({ setBg }) {
             setBg({ background: !mode ? '#C850C0' : '#C850C0', fill: !mode ? '#C850C0' : '#C850C0' })
           }}>
           <sphereBufferGeometry args={[1, 64, 64]} />
-          <AnimatedMaterial color={color} envMapIntensity={env} roughness={0.1}  clearcoatRoughness={0.2} metalness={0.1} />
+          <AnimatedMaterial color={color} envMapIntensity={env} roughness={0.7}  clearcoatRoughness={0.6} metalness={0.0} />
         </a.mesh>
         <Environment preset="warehouse" />
         <ContactShadows

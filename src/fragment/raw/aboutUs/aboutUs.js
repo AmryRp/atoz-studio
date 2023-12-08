@@ -19,12 +19,6 @@ const AboutUs = () => {
     <>
       <div className="about-us">
         <div className="inner-about-us">
-          <a.main style={{ background }}>
-            <Canvas className="bubble-about" dpr={[1, 2]}>
-              <Scene />
-              <OrbitControls enablePan={false} enableZoom={false} maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2} />
-            </Canvas>
-          </a.main>
           <div>
             <span className="paragraph-about-us">
               <h1 className="about-us-title">{users.AboutUs}</h1>

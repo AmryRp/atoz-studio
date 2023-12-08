@@ -8,9 +8,9 @@ import {
 import './showcaseBox.css'
 
 const ShowcaseBox = () => {
-  const [color2, setColor2] = useState("#4158D0");
-  const [color1, setColor1] = useState("#C850C0");
-  const [color3, setColor3] = useState("#FFCC70");
+  const [color2, setColor2] = useState("#fdcdb4");
+  const [color1, setColor1] = useState("#fdcdb4");
+  const [color3, setColor3] = useState("#fdcdb4");
 
   function saveImage() {
     const canvas = document.getElementsByTagName("canvas")[0]
@@ -34,14 +34,14 @@ const ShowcaseBox = () => {
               <PerspectiveCamera />
               <ambientLight />
               <spotLight
-                intensity={0.9}
-                angle={0.1}
-                penumbra={1}
-                position={[100, 150, 100]}
-                castShadow
+                intensity={0.5}
+                angle={0.6}
+                penumbra={0.5}
+                position={[270, 150, 100]}
+                castShadow={true}
               />
               <Scene
-                objectPos={{ x: 0, y: 0, z: 0 }}
+                objectPos={{ x:0, y: 0, z: 0 }}
                 customColors={{
                   color1: color1,
                   color2: color2,
