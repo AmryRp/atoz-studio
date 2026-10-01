@@ -5,11 +5,13 @@ import { validateCatalog } from '../src/lib/catalog.js';
 import { defaultCatalog } from '../src/lib/defaults.js';
 const attempts=new Map();
 const cookieName='atoz_session';
-const configured=()=>!!process.env.BLOB_READ_WRITE_TOKEN && (process.env.ADMIN_PASSWORD?.length||0)>=32 && (process.env.SESSION_SECRET?.length||0)>=32;
-const hash=value=>createHash('sha256').update(value).digest();
-const sign=value=>createHmac('sha256',process.env.SESSION_SECRET||'unconfigured').update(value).digest('base64url');
+const hasAdmin=()=>(process.env.ADMIN_PASSWORD?.length||0)>=16;
+const hasBlob=()=>!!process.env.BLOB_READ_WRITE_TOKEN;
+const sessionSecret=()=>process.env.SESSION_SECRET||process.env.ADMIN_PASSWORD||'unconfigured';
+const hash=value=>createHash('sha256').update(String(value)).digest();
+const sign=value=>createHmac('sha256',sessionSecret()).update(value).digest('base64url');
 export function authenticated(req){
- if(!configured())return false;
+ if(!hasAdmin())return false;
  const value=req.headers.cookie?.split(';').map(v=>v.trim()).find(v=>v.startsWith(cookieName+'='))?.slice(cookieName.length+1);
  if(!value)return false;const [expires,nonce,signature]=value.split('.');const payload=expires+'.'+nonce;
  return Number(expires)>Date.now()&&Number(expires)<Date.now()+3700000&&!!signature&&timingSafeEqual(hash(signature),hash(sign(payload)));
@@ -25,13 +27,13 @@ export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
  const action=req.query?.action || new URL(req.url,'https://localhost').searchParams.get('action');
  try{
-  if(req.method==='GET'&&action==='status')return res.status(200).json({configured:configured(),authenticated:authenticated(req)});
+  if(req.method==='GET'&&action==='status')return res.status(200).json({configured:hasAdmin(),hasBlob:hasBlob(),authenticated:authenticated(req)});
   if(req.method==='GET'&&action==='catalog')return res.status(200).json(await catalog());
   if(req.method!=='POST')return res.status(405).json({error:'Method not allowed.'});
   if(!sameOrigin(req))return res.status(403).json({error:'Use the studio panel on this site.'});
-  if(!configured())return res.status(503).json({error:'Live publishing needs Vercel Blob, ADMIN_PASSWORD and SESSION_SECRET. Drafts and ZIP export work without them.'});
   const body=typeof req.body==='string'?JSON.parse(req.body):req.body;
   if(action==='login'){
+   if(!hasAdmin())return res.status(503).json({error:'Admin password is not configured in server environment variables.'});
    const ip=String(process.env.VERCEL?req.headers['x-forwarded-for']:req.socket?.remoteAddress||'local').split(',')[0];const now=Date.now();
    for(const [key,state] of attempts)if(now-state.since>900000)attempts.delete(key);
    const state=attempts.get(ip)||{count:0,since:now};if(state.count>=5||attempts.size>1000)return res.status(429).json({error:'Too many attempts. Try again in 15 minutes.'});
@@ -39,6 +41,7 @@ export default async function handler(req,res){
    attempts.delete(ip);const payload=(now+3600000)+'.'+randomBytes(24).toString('hex');res.setHeader('Set-Cookie',cookie(payload+'.'+sign(payload),3600));return res.status(200).json({ok:true});
   }
   if(action==='logout'){res.setHeader('Set-Cookie',cookie('',0));return res.status(200).json({ok:true});}
+  if(!hasBlob())return res.status(503).json({error:'Live publishing needs Vercel Blob, ADMIN_PASSWORD and SESSION_SECRET. Drafts and ZIP export work without them.'});
   if(!authenticated(req))return res.status(401).json({error:'Sign in to publish changes.'});
   if(action==='upload'){
    const result=await handleUpload({request:req,body,onBeforeGenerateToken:async pathname=>{

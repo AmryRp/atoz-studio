@@ -218,4 +218,22 @@ h2 em, .scene-content h1 em { font-family: 'Instrument Serif', Georgia, serif; f
 .scene-model-placeholder { display: grid; gap: 22px; justify-items: center; padding: 40px; color: #513577; font-size: 1.5rem; text-align: center; }
 .scene-caption>span { font-size: .75rem; }
 @media(max-width:720px) { .scene-intro { font-size: .75rem; flex-wrap: wrap; row-gap: 5px; letter-spacing: .025em; } .scene-caption button { font-size: .875rem; } .motion-toggle { font-size: .75rem; } }
+
+/* Admin panel security gate */
+.auth-gate { display: flex; justify-content: center; align-items: center; min-height: 55vh; padding: 40px 16px; }
+.auth-card { background: #fff; border: 1px solid #ddd0e8; border-radius: 24px; padding: 40px 32px; max-width: 420px; width: 100%; box-shadow: 0 16px 40px rgba(60, 32, 85, 0.07); text-align: center; }
+.auth-icon { width: 60px; height: 60px; margin: 0 auto 18px; border-radius: 50%; background: #efe5fa; color: #76419f; display: flex; align-items: center; justify-content: center; }
+.auth-card h2 { font-size: 1.85rem; margin-bottom: 8px; color: #39234e; font-family: var(--heading); }
+.auth-desc { font-size: 0.92rem; color: #7a688b; margin-bottom: 22px; line-height: 1.5; }
+.auth-form { display: flex; flex-direction: column; gap: 16px; text-align: left; }
+.auth-form .field { margin-bottom: 0; }
+.auth-form .field span { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 6px; color: #523474; }
+.auth-form button { width: 100%; justify-content: center; }
+.panel-header-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.admin-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600; color: #5b3582; background: #eedefa; padding: 5px 12px; border-radius: 99px; }
+.button.small { padding: 8px 16px; font-size: 0.85rem; }
+.admin-footer-link { display: inline-flex; align-items: center; gap: 5px; opacity: 0.7; }
+.admin-footer-link:hover { opacity: 1; }
+.panel-loading { text-align: center; color: #7a688b; font-size: 1.05rem; }
+
 @media(max-width:360px) { .scene-intro { gap: 7px; font-size: .75rem; } .scene-caption { top: 175px; } }

@@ -7,10 +7,26 @@
  import { loadDraft, saveDraft } from '../lib/drafts';
  export let catalog;
  export let onUpdate;
- let draft=structuredClone(catalog),index=0,assets={},urls={},status='',error='',busy=false,stats={},stored=null,configured=false,authenticated=false,password='',dirty=false;
+ let draft=structuredClone(catalog),index=0,assets={},urls={},status='',error='',busy=false,stats={},stored=null,configured=false,authenticated=false,hasBlob=false,checkingAuth=true,password='',dirty=false;
  $: project=draft.projects[index];
  $: preview={...project,model:urls[project?.model]||project?.model,poster:urls[project?.poster]||project?.poster};
- onMount(()=>{loadDraft().then(value=>stored=value).catch(()=>status='Browser storage is unavailable. You can still export your work.');fetch('/api/studio?action=status').then(r=>r.json()).then(v=>{configured=!!v.configured;authenticated=!!v.authenticated}).catch(()=>{});const warn=e=>{if(dirty){e.preventDefault();e.returnValue=''}};window.addEventListener('beforeunload',warn);return()=>window.removeEventListener('beforeunload',warn)});
+ onMount(()=>{
+  fetch('/api/studio?action=status')
+   .then(r=>r.json())
+   .then(v=>{
+    configured=!!v.configured;
+    authenticated=!!v.authenticated;
+    hasBlob=!!v.hasBlob;
+    if(authenticated){
+     loadDraft().then(value=>stored=value).catch(()=>status='Browser storage is unavailable. You can still export your work.');
+    }
+   })
+   .catch(()=>{})
+   .finally(()=>{checkingAuth=false;});
+  const warn=e=>{if(dirty){e.preventDefault();e.returnValue=''}};
+  window.addEventListener('beforeunload',warn);
+  return()=>window.removeEventListener('beforeunload',warn);
+ });
  onDestroy(()=>Object.values(urls).forEach(url=>URL.revokeObjectURL(url)));
  function update(key,value){draft={...draft,projects:draft.projects.map((p,i)=>i===index?{...p,[key]:value}:p)};dirty=true;status='';error='';}
  function feature(){draft={...draft,projects:draft.projects.map((p,i)=>({...p,featured:i===index}))};dirty=true}
@@ -24,15 +40,74 @@
  function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
  async function exportFiles(){busy=true;error='';try{const valid=validateCatalog(draft);const {zipSync,strToU8}=await import('fflate');const files={'public/portfolio.json':strToU8(JSON.stringify(valid,null,2))};for(const path of new Set(valid.projects.flatMap(p=>[p.model,p.poster]).filter(p=>p.startsWith('/')))){const blob=assets[path]||await fetch(path).then(r=>{if(!r.ok)throw Error('Could not export '+path);return r.blob()});files['public'+path]=new Uint8Array(await blob.arrayBuffer());}files['HOW-TO-PUBLISH.txt']=strToU8('Copy the public folder into your AtoZ Studio project. Run bun run build and redeploy to Vercel. Existing files may be replaced. HTTPS model URLs remain external.');download(new Blob([zipSync(files,{level:0})],{type:'application/zip'}),'atoz-portfolio.zip');status='ZIP exported. Copy its public folder into this project and redeploy to publish.';}catch(e){error=e.message}finally{busy=false}}
  async function request(action,body){const r=await fetch('/api/studio?action='+action,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const value=await r.json();if(!r.ok)throw Error(value.error||'Request failed.');return value}
- async function login(){busy=true;error='';try{await request('login',{password});authenticated=true;password='';status='Signed in. You can now publish your portfolio.';}catch(e){error=e.message}finally{busy=false}}
- async function logout(){try{await request('logout',{});authenticated=false;status='Signed out.';}catch(e){error=e.message}}
+ async function login(){busy=true;error='';try{await request('login',{password});authenticated=true;password='';status='Signed in. You can now manage your portfolio.';loadDraft().then(value=>stored=value).catch(()=>{});}catch(e){error=e.message}finally{busy=false}}
+ async function logout(){try{await request('logout',{});authenticated=false;password='';status='';error='';}catch(e){error=e.message}}
  async function publish(){busy=true;error='';try{const valid=validateCatalog(draft);const {upload}=await import('@vercel/blob/client');const replacements={};for(const path of new Set(valid.projects.flatMap(p=>[p.model,p.poster]).filter(p=>assets[p]))){status='Uploading '+path.split('/').pop()+'…';const result=await upload('atoz/assets/'+path.split('/').pop(),assets[path],{access:'public',handleUploadUrl:'/api/studio?action=upload',contentType:path.endsWith('.glb')?'model/gltf-binary':path.endsWith('.gltf')?'model/gltf+json':path.endsWith('.webp')?'image/webp':path.endsWith('.png')?'image/png':'image/jpeg'});replacements[path]=result.url;}const published={...valid,projects:valid.projects.map(p=>({...p,model:replacements[p.model]||p.model,poster:replacements[p.poster]||p.poster}))};const result=await request('publish',published);draft=result.catalog;onUpdate(result.catalog);dirty=false;status='Published. Your portfolio is updated for all visitors.';try{await saveDraft({catalog:result.catalog,assets:{}});stored={catalog:result.catalog,assets:{}};}catch{status+=' Browser draft storage is unavailable.'}}catch(e){error=e.message}finally{busy=false}}
 </script>
-<main class="wrap studio"><header class="panel-header"><a class="brand" href="#home">atoz<span class="brand-light">studio</span><em>.</em></a><a class="text-link" href="#home">Back to portfolio <Icon/></a></header><h1>Your work. Your space.</h1><p class="studio-intro">Manage the pieces in your portfolio. Add a textured model, choose a cover image and put your best work first.</p>
-<div class="notice">{#if configured}Live publishing is available. {authenticated?'You are signed in.':'Sign in below to update the portfolio for every visitor.'}{:else}<strong>Draft mode.</strong> Changes stay on this device until you export and redeploy. Live uploads can be enabled with Vercel Blob and admin credentials; see the project README.{/if}</div>
-{#if configured}<div class="login-form">{#if authenticated}<button class="button secondary" on:click={logout}>Sign out</button>{:else}<form class="login-form" on:submit|preventDefault={login}><label class="field">Admin password<input type="password" bind:value={password} autocomplete="current-password" required/></label><button class="button secondary" disabled={busy}>Sign in</button></form>{/if}</div>{/if}
-<div class="panel-actions"><button class="button primary" on:click={save} disabled={busy}>Save device draft <Icon name="check"/></button><button class="button secondary" on:click={exportFiles} disabled={busy}>Export portfolio ZIP <Icon name="download"/></button>{#if authenticated}<button class="button primary" on:click={publish} disabled={busy}>Publish live <Icon/></button>{/if}{#if stored}<button class="button secondary" on:click={restore} disabled={busy}>Restore saved draft</button>{/if}<button class="button secondary" on:click={reset} disabled={busy}>Reset to published</button></div>
-<div class="panel-status" role="status">{#if status}<p>{status}</p>{/if}</div>{#if error}<div class="notice error" role="alert">{error}</div>{/if}
+{#if checkingAuth}
+ <main class="wrap studio">
+  <div class="auth-gate">
+   <p class="panel-loading">Verifying admin access…</p>
+  </div>
+ </main>
+{:else if !authenticated}
+ <main class="wrap studio">
+  <header class="panel-header">
+   <a class="brand" href="#home">atoz<span class="brand-light">studio</span><em>.</em></a>
+   <a class="text-link" href="#home">Back to portfolio <Icon/></a>
+  </header>
+  <div class="auth-gate">
+   <div class="auth-card">
+    <div class="auth-icon"><Icon name="lock" size={28}/></div>
+    <h2>Admin Access</h2>
+    <p class="auth-desc">Enter your password to unlock the studio management panel.</p>
+    {#if !configured}
+     <div class="notice error" role="alert">
+      Admin access is not configured. Set <strong>ADMIN_PASSWORD</strong> in your Vercel Project Settings to unlock this panel.
+     </div>
+    {:else}
+     <form class="auth-form" on:submit|preventDefault={login}>
+      <label class="field">
+       <span>Admin password</span>
+       <input type="password" bind:value={password} autocomplete="current-password" placeholder="Enter password" required disabled={busy}/>
+      </label>
+      <button class="button primary" disabled={busy || !password.trim()}>
+       {busy ? 'Verifying…' : 'Unlock panel'} <Icon name="arrow" size={16}/>
+      </button>
+     </form>
+    {/if}
+    {#if error}<div class="notice error" role="alert" style="margin-top: 14px;">{error}</div>{/if}
+   </div>
+  </div>
+ </main>
+{:else}
+ <main class="wrap studio">
+  <header class="panel-header">
+   <a class="brand" href="#home">atoz<span class="brand-light">studio</span><em>.</em></a>
+   <div class="panel-header-actions">
+    <span class="admin-badge"><Icon name="lock" size={13}/> Admin active</span>
+    <button class="button secondary small" on:click={logout}>Sign out</button>
+    <a class="text-link" href="#home">Back to portfolio <Icon/></a>
+   </div>
+  </header>
+  <h1>Your work. Your space.</h1>
+  <p class="studio-intro">Manage the pieces in your portfolio. Add a textured model, choose a cover image and put your best work first.</p>
+  <div class="notice">
+   {#if hasBlob}
+    Live publishing is connected. Changes can be published directly to all visitors.
+   {:else}
+    <strong>Local / draft mode.</strong> Set <code>BLOB_READ_WRITE_TOKEN</code> in Vercel settings to enable one-click live publishing to all visitors.
+   {/if}
+  </div>
+  <div class="panel-actions">
+   <button class="button primary" on:click={save} disabled={busy}>Save device draft <Icon name="check"/></button>
+   <button class="button secondary" on:click={exportFiles} disabled={busy}>Export portfolio ZIP <Icon name="download"/></button>
+   {#if hasBlob}<button class="button primary" on:click={publish} disabled={busy}>Publish live <Icon/></button>{/if}
+   {#if stored}<button class="button secondary" on:click={restore} disabled={busy}>Restore saved draft</button>{/if}
+   <button class="button secondary" on:click={reset} disabled={busy}>Reset to published</button>
+  </div>
+  <div class="panel-status" role="status">{#if status}<p>{status}</p>{/if}</div>
+  {#if error}<div class="notice error" role="alert">{error}</div>{/if}
 <div class="studio-grid"><aside class="studio-sidebar" aria-label="Project library">{#each draft.projects as p,i}<button class:active={i===index} on:click={()=>index=i} aria-current={i===index?'true':undefined}>{p.title}<small>{p.featured?'★ Featured · ':''}{p.model?'3D model':'Still render'}</small></button>{/each}<button on:click={add} disabled={draft.projects.length>=24||busy}><Icon name="plus"/> Add project</button></aside>
 <section class="editor" aria-label="Project editor"><h2>Edit your piece</h2><div class="form-grid"><label class="field">Project name<input value={project.title} maxlength="100" on:input={e=>update('title',e.currentTarget.value)}/></label><label class="field">Category<input value={project.category} maxlength="80" on:input={e=>update('category',e.currentTarget.value)}/></label></div><label class="field">Description<textarea value={project.description} maxlength="1000" on:input={e=>update('description',e.currentTarget.value)}></textarea></label>
 <div class="form-grid"><label class="field">Upload model<input type="file" accept=".glb,.gltf" disabled={busy} on:change={e=>fileChanged(e,'model')}/><small>GLB recommended. Self-contained glTF also works. Maximum 15 MB.</small></label><label class="field">Upload cover image<input type="file" accept="image/png,image/jpeg,image/webp" disabled={busy} on:change={e=>fileChanged(e,'poster')}/><small>WebP recommended. PNG or JPEG accepted. Maximum 2 MB.</small></label></div>
@@ -44,3 +119,4 @@
 <section class="studio-settings"><h2>Client contact</h2><div class="form-grid"><label class="field">Email<input type="email" bind:value={draft.contact} on:input={()=>dirty=true}/></label><label class="field">WhatsApp number<input type="tel" bind:value={draft.whatsapp} on:input={()=>dirty=true}/><small>International format, digits only. Indonesia: 62 followed by the number without its first 0.</small></label></div></section>
 <Guide/>
 </main>
+{/if}
