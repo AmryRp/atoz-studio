@@ -1,0 +1,20 @@
+import { describe, test, expect } from 'bun:test';
+import { readFile } from 'node:fs/promises';
+import { defaultCatalog } from '../src/lib/defaults.js';
+import { validateCatalog, parseModel, safeAsset, checkPoster, MAX_MODEL_BYTES } from '../src/lib/catalog.js';
+const encode=json=>new TextEncoder().encode(JSON.stringify(json)).buffer;
+const tiny={asset:{version:'2.0'},scene:0,scenes:[{nodes:[0]}],nodes:[{mesh:0}],meshes:[{primitives:[{attributes:{POSITION:0}}]}],accessors:[{count:6}],buffers:[{uri:'data:application/octet-stream;base64,AAAA'}]};
+describe('portfolio data and uploads',()=>{
+ test('accepts existing portfolio',()=>expect(validateCatalog(defaultCatalog).projects.length).toBe(3));
+ test('rejects executable, relative and credential-bearing asset URLs',()=>{for(const value of ['javascript:alert(1)','//evil.test/a.glb','../a.glb','https://user:pass@host.test/a.glb'])expect(safeAsset(value,['.glb'])).toBe(false)});
+ test('accepts local and HTTPS GLB sources',()=>{expect(safeAsset('/portfolio/a.glb',['.glb'])).toBe(true);expect(safeAsset('https://cdn.example.com/a.glb?v=1',['.glb'])).toBe(true)});
+ test('requires one featured piece and unique IDs',()=>{const c=structuredClone(defaultCatalog);c.projects[1].featured=true;expect(()=>validateCatalog(c)).toThrow('exactly one');c.projects[1].featured=false;c.projects[1].id=c.projects[0].id;expect(()=>validateCatalog(c)).toThrow('unique')});
+ test('requires actual model or poster and valid contact',()=>{const c=structuredClone(defaultCatalog);c.projects[0].poster='';expect(()=>validateCatalog(c)).toThrow('model or a poster');c.contact='not email';expect(()=>validateCatalog(c)).toThrow('email')});
+ test('counts mesh instances in the active glTF scene',()=>{const json=structuredClone(tiny);json.nodes.push({mesh:0});json.scenes[0].nodes.push(1);expect(parseModel(encode(json),'sample.gltf').triangles).toBe(4)});
+ test('rejects missing external glTF companion files and cycles',()=>{const json=structuredClone(tiny);json.buffers[0].uri='model.bin';expect(()=>parseModel(encode(json),'sample.gltf')).toThrow('separate textures');json.buffers=[];json.nodes[0].children=[0];expect(()=>parseModel(encode(json),'sample.gltf')).toThrow('cyclic')});
+ test('rejects oversized and invalid GLB data',()=>{expect(()=>parseModel(new ArrayBuffer(24),'broken.glb')).toThrow('valid glTF');expect(()=>parseModel(new ArrayBuffer(MAX_MODEL_BYTES+1),'huge.glb')).toThrow('15 MB')});
+ test('reads a GLB JSON chunk',()=>{let json=JSON.stringify(tiny);while(json.length%4)json+=' ';const chunk=new TextEncoder().encode(json);const b=new ArrayBuffer(20+chunk.length);const view=new DataView(b);view.setUint32(0,0x46546c67,true);view.setUint32(4,2,true);view.setUint32(8,b.byteLength,true);view.setUint32(12,chunk.length,true);view.setUint32(16,0x4e4f534a,true);new Uint8Array(b,20).set(chunk);expect(parseModel(b,'piece.glb').triangles).toBe(2)});
+ test('existing studio model parses with geometry',async()=>{const bytes=await readFile(new URL('../public/icons.gltf',import.meta.url));expect(parseModel(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'icons.gltf').triangles).toBeGreaterThan(0)});
+ test('rejects disguised non-image uploads',async()=>{await expect(checkPoster(new File(['<script>bad</script>'],'cover.png',{type:'image/png'}))).rejects.toThrow('actual PNG')});
+ test('optimized poster is actual WebP and small',async()=>{const bytes=await readFile(new URL('../public/portfolio/hannya.webp',import.meta.url));expect(bytes.byteLength).toBeLessThan(250000);expect(await checkPoster(new File([bytes],'cover.webp'))).toBe('webp')});
+});

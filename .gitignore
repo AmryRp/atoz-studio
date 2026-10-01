@@ -21,3 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Svelte / Bun workspace
+node_modules/
+dist/
+.tools/
+*.log
+.env*
+!.env.example
+.vercel/
+public/decoders/

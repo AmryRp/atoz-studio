@@ -1,0 +1,35 @@
+<script>
+ import { onMount } from 'svelte';
+ import Icon from './components/Icon.svelte';
+ import Viewer from './components/Viewer.svelte';
+ import SceneHero from './components/SceneHero.svelte';
+ import { validateCatalog } from './lib/catalog';
+ import { defaultCatalog } from './lib/defaults';
+ let catalog = defaultCatalog, menu = false, route = '', selected = 'icons', Studio;
+ $: projects = catalog.projects;
+ $: hero = projects.find(p => p.featured) || projects[0];
+ $: active = projects.find(p => p.id === selected) || projects.find(p => p.model) || hero;
+ $: if (route === '#studio' && !Studio) import('./components/Studio.svelte').then(m => Studio = m.default);
+ onMount(() => {
+   const change = () => { route = location.hash; menu = false; }; change();
+   window.addEventListener('hashchange', change);
+   (async()=>{try{const r=await fetch('/api/studio?action=catalog');if(r.ok && r.headers.get('content-type')?.includes('application/json')){const c=await r.json();if(c.projects?.length){catalog=validateCatalog(c);return;}}}catch{}try{const r=await fetch('/portfolio.json',{cache:'no-cache'});const c=await r.json();if(c.projects?.length)catalog=validateCatalog(c);}catch{}})();
+   return () => window.removeEventListener('hashchange', change);
+ });
+ function choose(id) { selected = id; document.getElementById('interactive')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}); }
+</script>
+<svelte:head><title>{route === '#studio' ? 'Studio panel' : 'Custom 3D, made for you'} — AtoZ Studio</title></svelte:head>
+{#if route === '#studio'}
+ {#if Studio}<svelte:component this={Studio} {catalog} onUpdate={value => catalog = value}/>{:else}<main class="page-loading">Opening studio…</main>{/if}
+{:else}
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><a class="brand" href="#home" aria-label="AtoZ Studio home"><span class="brand-mark">a<span>z</span><i></i></span><span>atoz<span class="brand-light">studio</span></span></a><nav class:open={menu} class="nav" aria-label="Main navigation"><a href="#work">Selected work</a><a href="#services">What I do</a><a href="#process">The process</a><a class="nav-cta" href="#contact">Start a project <Icon/></a></nav><button class="menu-toggle" aria-expanded={menu} aria-label={menu?'Close navigation':'Open navigation'} on:click={()=>menu=!menu}><Icon name={menu?'close':'menu'}/></button></header>
+<main id="main"><SceneHero project={hero} onExplore={choose}/>
+<div class="discipline-strip"><div class="wrap"><span>A little imagination goes a long way.</span><span>BLENDER <b>✳</b> SUBSTANCE PAINTER <b>✳</b> CUSTOM 3D</span></div></div>
+<section id="work" class="section wrap"><div class="section-heading"><div><div class="eyebrow">01 / SELECTED WORK</div><h2>Objects with<br/><em>personality.</em></h2></div><p>Explore the shapes, surfaces and small details that make each piece its own.</p></div><div class="work-grid">{#each projects as p,i (p.id)}<button class="work-card" class:selected={active.id===p.id} on:click={()=>choose(p.id)}><div class={'work-image tone-'+i}>{#if p.poster}<img src={p.poster} alt={p.title} loading="lazy" width="500" height="400"/>{:else}<div class="interactive-tile"><Icon name="box" size={72}/><span>Take it for a spin.</span><small>Explore in 3D <Icon/></small></div>{/if}<span class="work-badge">{p.model?'Interactive 3D':'Still render'}</span></div><div class="work-caption"><div><span>{p.category}</span><h3>{p.title}</h3></div><Icon/></div></button>{/each}</div>
+<div id="interactive" class="interactive-showcase"><div class="viewer-copy"><div class="eyebrow">BEYOND A STILL IMAGE</div><h3>See every<br/>side of it.</h3><p>{active.description}</p><span class="model-title">{active.title}</span><p class="muted small">{active.model?'Drag to orbit. Scroll or pinch to zoom. The 3D preview loads only when you open it.':'This piece is currently shown as a render. Select “Playful by design” to try the interactive model.'}</p><div class="viewer-selector" aria-label="Choose a piece">{#each projects as p}<button aria-pressed={active.id===p.id} on:click={()=>selected=p.id}>{p.title}</button>{/each}</div></div>{#key active.id+active.model}<Viewer project={active}/>{/key}</div></section>
+<section id="services" class="section services"><div class="wrap"><div class="section-heading"><div><div class="eyebrow">02 / MADE FOR YOUR IDEA</div><h2>Your imagination.<br/>My next <em>creation.</em></h2></div><p>Have a sketch, a reference, or just an idea? I’ll help turn it into a model made for your project.</p></div><div class="service-grid">{#each [{n:'01',icon:'box',title:'Custom 3D modeling',text:'Original props, accessories and stylized objects, shaped around your references and creative direction.'},{n:'02',icon:'layers',title:'Materials with character',text:'Detailed PBR textures made in Substance Painter, from subtle surface wear to a completely stylized finish.'},{n:'03',icon:'arrow',title:'Ready for its next world',text:'Optimized geometry and textured GLB / glTF delivery for interactive web displays, with other formats agreed in your brief.'}] as s}<article class="service-card"><div><Icon name={s.icon} size={30}/><span>{s.n}</span></div><h3>{s.title}</h3><p>{s.text}</p></article>{/each}</div></div></section>
+<section id="process" class="section wrap process"><div><div class="eyebrow">03 / A SIMPLE COLLABORATION</div><h2>A good idea.<br/>Three steps to <em>real.</em></h2><p>A clear process, with room to get the details right.</p></div><ol>{#each [['Share your idea','Send your references, intended use and timeline. We’ll agree on the scope before modeling begins.'],['Shape & refine','Review the form, then the materials. Your feedback helps bring the piece into focus.'],['Ready to use','Receive the agreed model formats and textures, prepared for where your model will live.']] as [title,text],i}<li><span>0{i+1}</span><div><h3>{title}</h3><p>{text}</p></div></li>{/each}</ol></section>
+<section id="contact" class="contact-section wrap"><div class="eyebrow">HAVE SOMETHING IN MIND?</div><h2>Let’s make something<br/><em>unexpected.</em></h2><p>Tell me what you’re imagining. Let’s make it yours.</p><div class="contact-actions"><a class="button primary" href={'mailto:'+catalog.contact+'?subject=Custom%203D%20project'}>Start your custom project <Icon/></a>{#if catalog.whatsapp}<a class="button secondary" href={'https://wa.me/'+catalog.whatsapp} target="_blank" rel="noreferrer">Chat on WhatsApp <Icon/></a>{/if}</div><a class="contact-email" href={'mailto:'+catalog.contact}>{catalog.contact}</a></section></main>
+<footer class="site-footer wrap"><a class="brand" href="#home">atoz<span class="brand-light">studio</span><span class="brand-period">.</span></a><span>Independent thinking. Distinctive 3D.</span><div><span>© {new Date().getFullYear()} AtoZ Studio</span><a href="#studio">Studio panel <Icon size={16}/></a></div></footer>
+{/if}

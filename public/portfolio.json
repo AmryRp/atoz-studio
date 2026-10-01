@@ -1,0 +1,32 @@
+{
+  "contact": "studio.atoz@gmail.com",
+  "projects": [
+    {
+      "id": "hannya",
+      "title": "Hannya mask",
+      "category": "Character accessory",
+      "description": "Sculpted form. Handcrafted surface detail.",
+      "poster": "/portfolio/hannya.webp",
+      "model": "",
+      "featured": true
+    },
+    {
+      "id": "icons",
+      "title": "Playful by design",
+      "category": "Interactive 3D",
+      "description": "A small form with a lot of personality. Explore the studio’s original icon model.",
+      "poster": "",
+      "model": "/icons.gltf",
+      "colors": true
+    },
+    {
+      "id": "headpiece",
+      "title": "The finishing touch",
+      "category": "Wearable accessory",
+      "description": "A study in silhouette, fabric and fine details.",
+      "poster": "/portfolio/headpiece.webp",
+      "model": ""
+    }
+  ],
+  "whatsapp": "6281414040297"
+}
