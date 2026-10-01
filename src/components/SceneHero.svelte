@@ -78,6 +78,6 @@
   </div>
   <div class="scene-bottom">
     <button class="motion-toggle" aria-pressed={!motion} on:click={() => motion = !motion} aria-label={motion ? 'Pause scene motion' : 'Enable scene motion'}><Icon name={motion ? 'pause' : 'play'} size={14} /> {motion ? 'Pause motion' : 'Motion paused'}</button>
-    <a href="#work" class="dive-link"><span>Scroll to<br />discover more</span><span class="down-arrow">↓</span></a>
+    <a href="#work" class="dive-link"><span>Scroll to<br />discover more</span><span class="down-arrow"><Icon name="down" size={32}/></span></a>
   </div>
 </section>

@@ -60,7 +60,7 @@ h2 em, .scene-content h1 em { font-family: 'Instrument Serif', Georgia, serif; f
 .motion-toggle { background: #2d194240; color: white; border: 1px solid #ffffff65; border-radius: 30px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; font-size: .75rem; min-height: 40px; }
 .dive-link { display: flex; width: 182px; height: 138px; padding: 20px; border-radius: 20px; background: #8863d5c9; backdrop-filter: blur(18px); font-size: 1.25rem; line-height: 1.1; justify-content: space-between; gap: 14px; }
 .dive-link:hover { background: #7651c5; }
-.down-arrow { align-self: flex-end; font-size: 2rem; }
+.down-arrow { align-self: flex-end; display: flex; }
 .discipline-strip { padding: 28px 0; background: #f0e9f8; border-color: #e0d5ee; }
 .discipline-strip span:first-child { color: #6f5c85; }
 .discipline-strip span:last-child { color: #5c4277; }
@@ -179,7 +179,6 @@ h2 em, .scene-content h1 em { font-family: 'Instrument Serif', Georgia, serif; f
   .scene-bottom { bottom: 20px; left: 6%; right: 6%; align-items: center; }
   .dive-link { background: none; backdrop-filter: none; height: auto; width: auto; padding: 0; gap: 14px; font-size: .85rem; align-items: center; border-radius: 0; }
   .dive-link:hover { background: none; }
-  .down-arrow { font-size: 1.8rem; }
   .motion-toggle { font-size: .7rem; min-height: 44px; padding: 10px 12px; }
   .discipline-strip { padding: 23px 0; }
   .discipline-strip span:last-child { font-size: .65rem; }
