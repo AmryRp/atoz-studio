@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import Icon from './Icon.svelte';
+  import LiquidMask from './LiquidMask.svelte';
   export let project;
   export let onExplore;
   let root;
@@ -31,10 +32,12 @@
       schedule();
     }
     function leave() { x = 0; y = 0; schedule(); }
-    function visibility() { visible = !document.hidden && root.getBoundingClientRect().bottom > 0; }
+    let intersecting = true;
+    function visibility() { visible = intersecting && !document.hidden; }
     function preferenceChanged() { motion = !preference.matches; leave(); }
-    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting && !document.hidden; });
+    const observer = new IntersectionObserver(([entry]) => { intersecting = entry.isIntersecting; visibility(); });
     observer.observe(root);
+    visibility();
     root.addEventListener('pointermove', move);
     root.addEventListener('pointerleave', leave);
     window.addEventListener('scroll', schedule, { passive: true });
@@ -57,7 +60,13 @@
   <div class="scene-shade" aria-hidden="true"></div>
   <div class="scene-object" aria-hidden="true">
     {#if project.poster}
-      <img src={project.poster} alt="" width="1000" height="1000" fetchpriority="high" class="floating-art" />
+      {#if project.id === 'hannya'}
+        {#key project.poster}
+          <LiquidMask src={project.poster} {motion} {visible} interactionRoot={root} />
+        {/key}
+      {:else}
+        <img src={project.poster} alt="" width="1000" height="1000" fetchpriority="high" class="floating-art" />
+      {/if}
     {:else}
       <div class="scene-model-placeholder"><Icon name="box" size={110} /><span>{project.title}</span></div>
     {/if}
