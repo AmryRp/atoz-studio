@@ -4,6 +4,7 @@
   export let motion = false;
   export let visible = true;
   export let intensity = 1;
+  export let contact = { active: false, x: 0.5, y: 0.5 };
   export let interactionRoot;
   let canvas, renderer;
   let ready = false;
@@ -26,7 +27,7 @@
       renderer = createLiquidMask(canvas, textureImage, interactionRoot, () => {
         failed = true;
         ready = false;
-      });
+      }, { controlled: true });
       ready = true;
     } catch {
       // Keep the original artwork if the texture or WebGL cannot be used.
@@ -34,6 +35,7 @@
     }
   }
   $: if (mounted && motion && visible && interactionRoot && !started) start();
+  $: renderer?.setContact(contact);
   $: renderer?.setActive(motion && visible && intensity > 0 && !failed);
 
   onMount(() => {
@@ -55,5 +57,6 @@
   .liquid-mask { position: relative; width: 100%; height: 100%; pointer-events: none; }
   img, canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
   img { object-fit: contain; }
-  canvas { opacity: 0; }
+  canvas { opacity: 0; transition: opacity .65s ease; }
+  @media(prefers-reduced-motion:reduce) { canvas { transition: opacity .65s ease !important; } }
 </style>

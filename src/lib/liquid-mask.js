@@ -18,6 +18,9 @@ const fragmentSource = `
   uniform float uTime;
   uniform float uEnergy;
   uniform float uScreen;
+  uniform vec2 uContact;
+  uniform float uContactLevel;
+  uniform float uContactAge;
 
   float surface(vec2 p) {
     float t = uTime * 0.48;
@@ -28,7 +31,11 @@ const fragmentSource = `
     vec2 delta = p - uPointer;
     float distance = length(delta);
     float ripple = sin(distance * 46.0 - uTime * 5.0);
-    return flow * 0.34 + ripple * exp(-distance * 8.0) * uEnergy * 0.65;
+    float impactDistance = length((p - uContact) * vec2(1.0, 1.35));
+    float front = smoothstep(0.0, 0.07, uContactAge * 0.2 - impactDistance);
+    float wake = sin(impactDistance * 58.0 - uContactAge * 6.5);
+    return flow * 0.34 + ripple * exp(-distance * 8.0) * uEnergy * 0.65
+      + wake * exp(-impactDistance * 3.5) * uContactLevel * front * 0.65;
   }
 
   void main() {
@@ -56,7 +63,11 @@ const fragmentSource = `
       // Transparent highlights let the actual HTML, including text, show through.
       float ribbon = pow(max(0.0, 1.0 - abs(height - 0.12) * 3.0), 8.0);
       float alpha = min(0.42, highlight * 0.24 + rim * 0.13 + ribbon * 0.16);
-      vec3 film = mix(pearl, vec3(1.0, 0.97, 1.0), highlight);
+      float distanceToMask = length((uv - uContact) * vec2(1.0, 1.6));
+      float caustic = pow(max(0.0, 1.0 - abs(height + 0.08) * 4.0), 9.0);
+      caustic *= exp(-distanceToMask * 7.0) * uContactLevel;
+      alpha = min(0.7, alpha + caustic * 0.7);
+      vec3 film = mix(pearl, vec3(1.0, 0.97, 1.0), max(highlight, caustic));
       gl_FragColor = vec4(film * alpha, alpha);
       return;
     }
@@ -126,7 +137,7 @@ export function createLiquidMask(canvas, image, interactionRoot, onError, option
     throw error;
   }
 
-  const uniforms = Object.fromEntries(['uFit', 'uPointer', 'uTime', 'uEnergy']
+  const uniforms = Object.fromEntries(['uFit', 'uPointer', 'uTime', 'uEnergy', 'uContact', 'uContactLevel', 'uContactAge']
     .map(name => [name, gl.getUniformLocation(program, name)]));
   const coarse = matchMedia('(pointer: coarse)').matches;
   const interval = 1000 / (coarse ? 30 : 45);
@@ -134,6 +145,7 @@ export function createLiquidMask(canvas, image, interactionRoot, onError, option
   let fitX = 1, fitY = 1, energy = 0, targetEnergy = 0;
   let pointerX = 0.5, pointerY = 0.5, targetX = 0.5, targetY = 0.5;
   let strength = 1;
+  let contactX = 0.5, contactY = 0.5, contactLevel = 0, targetContact = 0, contactStart = 0;
 
   function draw() {
     if (disposed || gl.isContextLost()) return;
@@ -141,6 +153,9 @@ export function createLiquidMask(canvas, image, interactionRoot, onError, option
     gl.uniform2f(uniforms.uPointer, pointerX, pointerY);
     gl.uniform1f(uniforms.uTime, time);
     gl.uniform1f(uniforms.uEnergy, energy);
+    gl.uniform2f(uniforms.uContact, (contactX - 0.5) * fitX + 0.5, (contactY - 0.5) * fitY + 0.5);
+    gl.uniform1f(uniforms.uContactLevel, contactLevel);
+    gl.uniform1f(uniforms.uContactAge, Math.max(0, time - contactStart));
     gl.drawArrays(gl.TRIANGLES, 0, 6);
     options.onDraw?.({ time, energy, strength, coarse });
   }
@@ -174,6 +189,7 @@ export function createLiquidMask(canvas, image, interactionRoot, onError, option
       pointerX += (targetX - pointerX) * ease;
       pointerY += (targetY - pointerY) * ease;
       energy += (targetEnergy - energy) * ease;
+      contactLevel += (targetContact - contactLevel) * ease;
       draw();
     }
     frame = requestAnimationFrame(tick);
@@ -186,7 +202,7 @@ export function createLiquidMask(canvas, image, interactionRoot, onError, option
     else { cancelAnimationFrame(frame); frame = 0; targetEnergy = 0; }
   }
   function move(event) {
-    if (!active) return;
+    if (!active || options.controlled) return;
     const rect = canvas.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width;
     const y = 1 - (event.clientY - rect.top) / rect.height;
@@ -194,7 +210,7 @@ export function createLiquidMask(canvas, image, interactionRoot, onError, option
     targetY = (y - 0.5) * fitY + 0.5;
     targetEnergy = x >= 0 && x <= 1 && y >= 0 && y <= 1 ? 1 : 0;
   }
-  function leave() { targetEnergy = 0; }
+  function leave() { if (!options.controlled) targetEnergy = 0; }
   function contextLost() { setActive(false); onError(); }
   const observer = new ResizeObserver(resize);
   observer.observe(canvas);
@@ -208,6 +224,18 @@ export function createLiquidMask(canvas, image, interactionRoot, onError, option
 
   return {
     setActive,
+    setContact(contact) {
+      const next = contact.active ? 1 : 0;
+      if (next && !targetContact) contactStart = time;
+      targetContact = next;
+      contactX = contact.x;
+      contactY = contact.y;
+      if (options.controlled) {
+        targetEnergy = next;
+        targetX = contact.x;
+        targetY = contact.y;
+      }
+    },
     setStrength(value) {
       strength = Math.max(0, Math.min(1, value));
       if (!active) draw();

@@ -10,6 +10,7 @@
   let visible = true;
   let liquidIntensity = 1;
   let liquidReady = false;
+  let liquidContact = { active: false, x: 0.5, y: 0.5 };
   let objectOffset = { x: 0, y: 0, scroll: 0, turn: 0 };
 
   onMount(() => {
@@ -62,8 +63,8 @@
 </script>
 
 <section id="home" class="scene-hero" class:motion-enabled={motion} class:scene-visible={visible} bind:this={root} aria-labelledby="hero-heading">
-  <FloatingObject {project} {motion} {visible} intensity={liquidIntensity} interactionRoot={root} offset={objectOffset} />
-  <LiquidScreen {motion} {visible} intensity={liquidIntensity} bind:ready={liquidReady} />
+  <FloatingObject {project} {motion} {visible} intensity={liquidIntensity} interactionRoot={root} offset={objectOffset} onContact={value => liquidContact = value} />
+  <LiquidScreen {motion} {visible} intensity={liquidIntensity} contact={liquidContact} bind:ready={liquidReady} />
   <div class="scene-refraction" class:liquid-refracting={liquidReady && liquidIntensity > 0}>
   <div class="scene-landscape" aria-hidden="true"></div>
   <div class="scene-shade" aria-hidden="true"></div>

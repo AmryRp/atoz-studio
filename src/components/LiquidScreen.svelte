@@ -4,6 +4,7 @@
   export let visible = true;
   export let intensity = 1;
   export let ready = false;
+  export let contact = { active: false, x: 0.5, y: 0.5 };
   let canvas, noise, displacement, renderer;
   let mounted = false, started = false, disposed = false, failed = false;
 
@@ -31,6 +32,7 @@
     }
   }
   $: if (mounted && motion && visible && intensity > 0 && !started) start();
+  $: renderer?.setContact(contact);
   $: renderer?.setStrength(intensity);
   $: renderer?.setActive(motion && visible && intensity > 0 && !failed);
   onMount(() => {
