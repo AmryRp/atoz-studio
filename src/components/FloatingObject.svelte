@@ -121,10 +121,10 @@
   .submerged .floating-body { transform: translateY(38px) scale(.96) rotateX(7deg); }
   .scene-floating-layer.submerged :global(.floating-art) { animation-play-state: paused !important; }
   .surface-contact { position: absolute; left: 28%; top: 88%; width: 48%; height: 12%; }
-  .float-shadow { position: absolute; left: 14%; top: 18%; width: 72%; height: 42%; border-radius: 50%; background: radial-gradient(ellipse, #26153770, #39254832 45%, transparent 73%); filter: blur(9px); transform: scale(1); }
+  .float-shadow { position: absolute; left: 14%; top: 18%; width: 72%; height: 42%; border-radius: 50%; background: radial-gradient(ellipse, #00150e99, #031c1345 45%, transparent 73%); filter: blur(9px); transform: scale(1); }
   .surface-wake { position: absolute; inset: 0; opacity: 0; transition: opacity .65s ease; }
   .submerged .surface-wake { opacity: 1; }
-  .surface-ripple { position: absolute; inset: -7% 0 0; border: 1px solid #f6eaffbb; border-radius: 50%; box-shadow: 0 1px 0 #66418b30, inset 0 1px 0 #ffffff35; opacity: .3; transform: scale(.8); }
+  .surface-ripple { position: absolute; inset: -7% 0 0; border: 1px solid #def1c9bb; border-radius: 50%; box-shadow: 0 1px 0 #33593e50, inset 0 1px 0 #eff9d835; opacity: .3; transform: scale(.8); }
   .delayed { inset: -27% -12% -20%; opacity: .15; }
   /* Motion stays off for reduced-motion users until they explicitly enable it. */
   .motion-enabled .float-shadow { animation: floating-shadow 8s ease-in-out infinite !important; animation-play-state: paused !important; }

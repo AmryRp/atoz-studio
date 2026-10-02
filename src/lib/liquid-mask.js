@@ -57,17 +57,17 @@ const fragmentSource = `
     float highlight = pow(max(dot(normal, halfway), 0.0), 28.0);
     float softLight = pow(max(dot(normal, halfway), 0.0), 5.0);
     float rim = pow(1.0 - max(normal.z, 0.0), 2.0);
-    vec3 pearl = mix(vec3(0.69, 0.78, 1.0), vec3(1.0, 0.76, 0.9),
+    vec3 pearl = mix(vec3(0.65, 0.91, 0.78), vec3(1.0, 0.89, 0.64),
                      sin(height * 2.0 + uTime * 0.15) * 0.5 + 0.5);
     if (uScreen > 0.5) {
       // Transparent highlights let the actual HTML, including text, show through.
       float ribbon = pow(max(0.0, 1.0 - abs(height - 0.12) * 3.0), 8.0);
-      float alpha = min(0.42, highlight * 0.24 + rim * 0.13 + ribbon * 0.16);
+      float alpha = min(0.32, highlight * 0.18 + rim * 0.09 + ribbon * 0.12);
       float distanceToMask = length((uv - uContact) * vec2(1.0, 1.6));
       float caustic = pow(max(0.0, 1.0 - abs(height + 0.08) * 4.0), 9.0);
       caustic *= exp(-distanceToMask * 7.0) * uContactLevel;
       alpha = min(0.7, alpha + caustic * 0.7);
-      vec3 film = mix(pearl, vec3(1.0, 0.97, 1.0), max(highlight, caustic));
+      vec3 film = mix(pearl, vec3(0.94, 1.0, 0.84), max(highlight, caustic));
       gl_FragColor = vec4(film * alpha, alpha);
       return;
     }
