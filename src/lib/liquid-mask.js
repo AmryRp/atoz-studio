@@ -1,5 +1,5 @@
 // A lightweight liquid coating for the existing transparent Hannya artwork.
-// No model download, extra library, or full-screen render pass is required.
+// The same renderer also supports a transparent, viewport-wide liquid layer.
 const vertexSource = `
   attribute vec2 aPosition;
   varying vec2 vUv;
@@ -17,6 +17,7 @@ const fragmentSource = `
   uniform vec2 uPointer;
   uniform float uTime;
   uniform float uEnergy;
+  uniform float uScreen;
 
   float surface(vec2 p) {
     float t = uTime * 0.48;
@@ -32,9 +33,9 @@ const fragmentSource = `
 
   void main() {
     vec2 uv = (vUv - 0.5) * uFit + 0.5;
-    if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) discard;
-    vec4 original = texture2D(uImage, uv);
-    if (original.a < 0.01) discard;
+    if (uScreen < 0.5 && (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0)) discard;
+    vec4 original = texture2D(uImage, clamp(uv, 0.0, 1.0));
+    if (uScreen < 0.5 && original.a < 0.01) discard;
 
     float height = surface(uv);
     vec2 slope = vec2(surface(uv + vec2(0.003, 0.0)) - height,
@@ -51,6 +52,14 @@ const fragmentSource = `
     float rim = pow(1.0 - max(normal.z, 0.0), 2.0);
     vec3 pearl = mix(vec3(0.69, 0.78, 1.0), vec3(1.0, 0.76, 0.9),
                      sin(height * 2.0 + uTime * 0.15) * 0.5 + 0.5);
+    if (uScreen > 0.5) {
+      // Transparent highlights let the actual HTML, including text, show through.
+      float ribbon = pow(max(0.0, 1.0 - abs(height - 0.12) * 3.0), 8.0);
+      float alpha = min(0.42, highlight * 0.24 + rim * 0.13 + ribbon * 0.16);
+      vec3 film = mix(pearl, vec3(1.0, 0.97, 1.0), highlight);
+      gl_FragColor = vec4(film * alpha, alpha);
+      return;
+    }
     // Red lacquer remains visible beneath the pearlescent liquid.
     vec3 color = base * (0.88 + softLight * 0.14);
     color += pearl * (highlight * 0.66 + rim * 0.24);
@@ -59,7 +68,8 @@ const fragmentSource = `
   }
 `;
 
-export function createLiquidMask(canvas, image, interactionRoot, onError) {
+export function createLiquidMask(canvas, image, interactionRoot, onError, options = {}) {
+  const fullscreen = !!options.fullscreen;
   const gl = canvas.getContext('webgl', {
     alpha: true, premultipliedAlpha: true, antialias: false,
     depth: false, stencil: false, powerPreference: 'low-power',
@@ -104,7 +114,12 @@ export function createLiquidMask(canvas, image, interactionRoot, onError) {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+    if (fullscreen) {
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(4));
+    } else {
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+    }
+    gl.uniform1f(gl.getUniformLocation(program, 'uScreen'), fullscreen ? 1 : 0);
     gl.uniform1i(gl.getUniformLocation(program, 'uImage'), 0);
   } catch (error) {
     release();
@@ -118,6 +133,7 @@ export function createLiquidMask(canvas, image, interactionRoot, onError) {
   let frame = 0, last = 0, time = 0, active = false, disposed = false;
   let fitX = 1, fitY = 1, energy = 0, targetEnergy = 0;
   let pointerX = 0.5, pointerY = 0.5, targetX = 0.5, targetY = 0.5;
+  let strength = 1;
 
   function draw() {
     if (disposed || gl.isContextLost()) return;
@@ -126,6 +142,7 @@ export function createLiquidMask(canvas, image, interactionRoot, onError) {
     gl.uniform1f(uniforms.uTime, time);
     gl.uniform1f(uniforms.uEnergy, energy);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
+    options.onDraw?.({ time, energy, strength, coarse });
   }
   function resize() {
     const width = canvas.clientWidth, height = canvas.clientHeight;
@@ -134,9 +151,14 @@ export function createLiquidMask(canvas, image, interactionRoot, onError) {
     canvas.width = Math.round(width * ratio);
     canvas.height = Math.round(height * ratio);
     gl.viewport(0, 0, canvas.width, canvas.height);
-    const scale = Math.min(width / image.naturalWidth, height / image.naturalHeight);
-    fitX = width / (image.naturalWidth * scale);
-    fitY = height / (image.naturalHeight * scale);
+    if (fullscreen) {
+      fitX = width / height;
+      fitY = 1;
+    } else {
+      const scale = Math.min(width / image.naturalWidth, height / image.naturalHeight);
+      fitX = width / (image.naturalWidth * scale);
+      fitY = height / (image.naturalHeight * scale);
+    }
     draw();
   }
   function tick(now) {
@@ -186,6 +208,10 @@ export function createLiquidMask(canvas, image, interactionRoot, onError) {
 
   return {
     setActive,
+    setStrength(value) {
+      strength = Math.max(0, Math.min(1, value));
+      if (!active) draw();
+    },
     destroy() {
       setActive(false);
       disposed = true;

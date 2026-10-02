@@ -1,12 +1,16 @@
 <script>
   import { onMount } from 'svelte';
   import Icon from './Icon.svelte';
-  import LiquidMask from './LiquidMask.svelte';
+  import FloatingObject from './FloatingObject.svelte';
+  import LiquidScreen from './LiquidScreen.svelte';
   export let project;
   export let onExplore;
   let root;
   let motion = false;
   let visible = true;
+  let liquidIntensity = 1;
+  let liquidReady = false;
+  let objectOffset = { x: 0, y: 0, scroll: 0, turn: 0 };
 
   onMount(() => {
     const preference = matchMedia('(prefers-reduced-motion: reduce)');
@@ -18,10 +22,9 @@
       if (!root) return;
       const rect = root.getBoundingClientRect();
       const progress = Math.max(0, Math.min(1, -rect.top / rect.height));
-      root.style.setProperty('--pointer-x', motion ? x + 'px' : '0px');
-      root.style.setProperty('--pointer-y', motion ? y + 'px' : '0px');
-      root.style.setProperty('--scene-scroll', motion ? progress * 90 + 'px' : '0px');
-      root.style.setProperty('--scene-turn', motion ? progress * -8 + 'deg' : '0deg');
+      const fade = Math.min(1, progress / 0.8);
+      liquidIntensity = 1 - fade * fade * (3 - 2 * fade);
+      objectOffset = { x, y, scroll: progress * 45, turn: progress * -4 };
     }
     function schedule() { if (!frame) frame = requestAnimationFrame(update); }
     function move(event) {
@@ -38,6 +41,8 @@
     const observer = new IntersectionObserver(([entry]) => { intersecting = entry.isIntersecting; visibility(); });
     observer.observe(root);
     visibility();
+    schedule();
+    window.addEventListener('resize', schedule, { passive: true });
     root.addEventListener('pointermove', move);
     root.addEventListener('pointerleave', leave);
     window.addEventListener('scroll', schedule, { passive: true });
@@ -49,6 +54,7 @@
       root.removeEventListener('pointermove', move);
       root.removeEventListener('pointerleave', leave);
       window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
       document.removeEventListener('visibilitychange', visibility);
       preference.removeEventListener('change', preferenceChanged);
     };
@@ -56,21 +62,11 @@
 </script>
 
 <section id="home" class="scene-hero" class:motion-enabled={motion} class:scene-visible={visible} bind:this={root} aria-labelledby="hero-heading">
+  <FloatingObject {project} {motion} {visible} intensity={liquidIntensity} interactionRoot={root} offset={objectOffset} />
+  <LiquidScreen {motion} {visible} intensity={liquidIntensity} bind:ready={liquidReady} />
+  <div class="scene-refraction" class:liquid-refracting={liquidReady && liquidIntensity > 0}>
   <div class="scene-landscape" aria-hidden="true"></div>
   <div class="scene-shade" aria-hidden="true"></div>
-  <div class="scene-object" aria-hidden="true">
-    {#if project.poster}
-      {#if project.id === 'hannya'}
-        {#key project.poster}
-          <LiquidMask src={project.poster} {motion} {visible} interactionRoot={root} />
-        {/key}
-      {:else}
-        <img src={project.poster} alt="" width="1000" height="1000" fetchpriority="high" class="floating-art" />
-      {/if}
-    {:else}
-      <div class="scene-model-placeholder"><Icon name="box" size={110} /><span>{project.title}</span></div>
-    {/if}
-  </div>
   <div class="scene-intro"><span class="scene-dot"></span> INDEPENDENT 3D ARTIST <span class="intro-divider">/</span> ATOZ STUDIO</div>
   <div class="scene-content">
     <h1 id="hero-heading">A little idea.<br />A whole new <em>world.</em></h1>
@@ -80,13 +76,20 @@
       <a class="button secondary" href="#work">Explore the work <Icon name="right" /></a>
     </div>
   </div>
+  <div class="scene-bottom">
+    <button class="motion-toggle" aria-pressed={!motion} on:click={() => motion = !motion} aria-label={motion ? 'Pause scene motion' : 'Enable scene motion'}><Icon name={motion ? 'pause' : 'play'} size={14} /> {motion ? 'Pause motion' : 'Motion paused'}</button>
+    <a href="#work" class="dive-link"><span>Scroll to<br />discover more</span><span class="down-arrow"><Icon name="down" size={32}/></span></a>
+  </div>
+  </div>
   <div class="scene-caption">
     <span>IN THE SPOTLIGHT</span>
     <button on:click={() => onExplore(project.id)}>{project.title} <Icon /></button>
     <small>{project.model ? 'Interactive model available' : 'Original AtoZ artwork · Still render'}</small>
   </div>
-  <div class="scene-bottom">
-    <button class="motion-toggle" aria-pressed={!motion} on:click={() => motion = !motion} aria-label={motion ? 'Pause scene motion' : 'Enable scene motion'}><Icon name={motion ? 'pause' : 'play'} size={14} /> {motion ? 'Pause motion' : 'Motion paused'}</button>
-    <a href="#work" class="dive-link"><span>Scroll to<br />discover more</span><span class="down-arrow"><Icon name="down" size={32}/></span></a>
-  </div>
 </section>
+
+<style>
+  .scene-refraction { position: absolute; inset: 0; isolation: isolate; }
+  .scene-caption { z-index: 6; }
+  .liquid-refracting { filter: url(#home-liquid-refraction); }
+</style>

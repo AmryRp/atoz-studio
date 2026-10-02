@@ -13,7 +13,7 @@ body { background: var(--bg); }
 h2 { font-weight: 400; font-size: clamp(2.6rem, 5.5vw, 5rem); line-height: 1.02; }
 h2 em, .scene-content h1 em { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-style: italic; letter-spacing: -.045em; }
 .wrap { width: min(1320px, calc(100% - 96px)); }
-.site-header { position: absolute; z-index: 20; inset: 0 0 auto; max-width: none; padding: 24px 3%; min-height: 100px; border: 0; color: #2b164a; }
+.site-header { position: absolute; z-index: 100; inset: 0 0 auto; max-width: none; padding: 24px 3%; min-height: 100px; border: 0; color: #2b164a; }
 .brand { letter-spacing: -.055em; font-size: 1.7rem; gap: 9px; }
 .brand-light { color: inherit; opacity: .8; }
 .brand-mark { background: #7257b1; color: white; box-shadow: inset 2px 3px 6px #f4c4ff80; }
@@ -35,11 +35,11 @@ h2 em, .scene-content h1 em { font-family: 'Instrument Serif', Georgia, serif; f
 .scene-landscape { position: absolute; inset: -2%; z-index: -3; background: linear-gradient(#f4e7e3, #b8a0d1 55%, #7362b2); background-image: url('/portfolio/dreamscape-desktop.webp'); background-size: cover; background-position: center; transform: scale(1.03); }
 .scene-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #3b225228 0%, transparent 70%), linear-gradient(0deg, #33234aab 0%, #46306465 26%, transparent 63%); }
 .scene-object { position: absolute; right: 7%; top: 6%; width: min(55vw, 830px); height: 82%; z-index: -2; display: grid; place-items: center; transform: translate3d(var(--pointer-x), calc(var(--pointer-y) + var(--scene-scroll)), 0) rotate(var(--scene-turn)); transition: transform .45s ease-out; }
-.floating-art { object-fit: contain; height: 100%; width: 100%; filter: drop-shadow(15px 34px 26px #3a234864); }
-.motion-enabled .floating-art { animation: scene-float 8s ease-in-out infinite; animation-play-state: paused; }
-.motion-enabled.scene-visible .floating-art { animation-play-state: running; }
+.floating-art { object-fit: contain; height: 100%; width: 100%; filter: drop-shadow(10px 24px 18px #28143c50); transform-origin: 52% 62%; }
+.motion-enabled .floating-art { animation: scene-float 8s ease-in-out infinite !important; animation-play-state: paused !important; }
+.motion-enabled.scene-visible .floating-art { animation-play-state: running !important; }
 .scene-hero:not(.motion-enabled) .scene-object { transform: none; }
-@keyframes scene-float { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-17px) rotate(-1deg); } }
+@keyframes scene-float { 0%, 100% { transform: translate3d(0, 0, 28px) rotateX(3deg) rotateY(-5deg) rotate(-3deg); } 50% { transform: translate3d(5px, -22px, 42px) rotateX(-3deg) rotateY(5deg) rotate(1deg); } }
 .scene-intro { position: absolute; left: 6%; top: 24%; color: #48255e; display: flex; align-items: center; gap: 12px; font-size: .7rem; letter-spacing: .13em; font-weight: 600; }
 .scene-dot { width: 7px; height: 7px; border-radius: 50%; background: #774990; }
 .intro-divider { opacity: .45; }
@@ -211,7 +211,7 @@ h2 em, .scene-content h1 em { font-family: 'Instrument Serif', Georgia, serif; f
   .discipline-strip span:last-child { font-size: .6rem; gap: 11px; }
 }
 @media(prefers-reduced-motion:reduce) {
-  .scene-object, .floating-art { transform: none !important; animation: none !important; transition: none !important; }
+  .scene-floating-layer:not(.motion-enabled) .scene-object, .scene-floating-layer:not(.motion-enabled) .floating-art { transform: none !important; animation: none !important; transition: none !important; }
 }
 
 .scene-model-placeholder { display: grid; gap: 22px; justify-items: center; padding: 40px; color: #513577; font-size: 1.5rem; text-align: center; }

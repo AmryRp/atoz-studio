@@ -3,6 +3,7 @@
   export let src;
   export let motion = false;
   export let visible = true;
+  export let intensity = 1;
   export let interactionRoot;
   let canvas, renderer;
   let ready = false;
@@ -33,7 +34,7 @@
     }
   }
   $: if (mounted && motion && visible && interactionRoot && !started) start();
-  $: renderer?.setActive(motion && visible && !failed);
+  $: renderer?.setActive(motion && visible && intensity > 0 && !failed);
 
   onMount(() => {
     mounted = true;
@@ -47,7 +48,7 @@
 
 <div class="liquid-mask floating-art" class:ready>
   <img {src} alt="" width="1000" height="1000" fetchpriority="high" />
-  <canvas bind:this={canvas} aria-hidden="true"></canvas>
+  <canvas bind:this={canvas} aria-hidden="true" style:opacity={ready ? intensity : 0}></canvas>
 </div>
 
 <style>
@@ -55,6 +56,4 @@
   img, canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
   img { object-fit: contain; }
   canvas { opacity: 0; }
-  .ready canvas { opacity: 1; }
-  .ready img { opacity: 0; }
 </style>
